@@ -1,0 +1,9 @@
+# Sound events, played in code as lna:<key>.
+#   files     one or more .ogg files (mono for positional audio), relative to content/sounds;
+#             the client picks one at random
+#   subtitle  text shown when subtitles are enabled
+#   stream    true for long sounds such as music
+
+feuerloescher.spray:
+  files: [feuerloescher/spray.ogg]
+  subtitle: "Feuerlöscher sprüht"

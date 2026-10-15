@@ -1,0 +1,16 @@
+# Lass nichts anbrennen - plugin configuration
+
+pack:
+  # Host name or IP that clients use to download the resource pack.
+  # Empty: server-ip from server.properties, otherwise the LAN address of this machine.
+  # Use the public address or domain when the server is reachable from the internet.
+  host: ""
+  # Port of the built-in pack HTTP server. Must be reachable through the firewall.
+  port: 8164
+  # Fixed download URL instead of the built-in server, e.g. a GitHub release asset.
+  # The file behind the URL must be byte-identical to the embedded pack (same SHA-1).
+  public-url: ""
+  # Custom items and HUDs do not work without the pack, so it is mandatory by default.
+  required: true
+  # Prompt shown to players (MiniMessage).
+  prompt: "<gold>Lass nichts anbrennen</gold> <gray>braucht ein eigenes Ressourcenpaket mit Texturen und Sounds.</gray>"

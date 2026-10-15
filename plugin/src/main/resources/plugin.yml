@@ -1,0 +1,12 @@
+name: LassNichtsAnbrennen
+version: '${version}'
+main: io.github.vxnsin.lna.plugin.LnaPlugin
+api-version: '${apiVersion}'
+description: Brandschutz-Kampagne "Lass nichts anbrennen" (JWSL 2026/27)
+authors: [vxnsin]
+website: https://github.com/vxnsin/lass-nichts-anbrennen
+
+permissions:
+  lna.admin:
+    description: Werkzeugbefehle (/lna give, refill, reloadpack, items)
+    default: op

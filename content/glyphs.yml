@@ -1,0 +1,20 @@
+# Glyphs: images rendered as characters of the lna:hud font.
+# Usable in any MiniMessage text via <glyph:id>; move the cursor with <shift:pixels>.
+#   texture  relative to content/textures
+#   height   rendered height in pixels (the image is scaled proportionally)
+#   ascent   pixels above the text baseline (must not exceed height; negative values move the image down)
+
+hud_feuerloescher:
+  texture: hud/feuerloescher.png
+  height: 8
+  ascent: 7
+
+hud_bar_full:
+  texture: hud/bar_full.png
+  height: 7
+  ascent: 6
+
+hud_bar_empty:
+  texture: hud/bar_empty.png
+  height: 7
+  ascent: 6
