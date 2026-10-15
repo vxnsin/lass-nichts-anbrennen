@@ -8,5 +8,8 @@ website: https://github.com/vxnsin/lass-nichts-anbrennen
 
 permissions:
   lna.admin:
-    description: Werkzeugbefehle (/lna give, refill, reloadpack, items)
+    description: Werkzeugbefehle (/lna give, refill, reloadpack, items, fire)
+    default: op
+  lna.build:
+    description: Objekte platzieren und entfernen, Maps bauen
     default: op

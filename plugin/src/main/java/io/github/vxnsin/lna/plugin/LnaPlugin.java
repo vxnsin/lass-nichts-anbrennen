@@ -5,6 +5,9 @@ import com.google.gson.JsonParser;
 import io.github.vxnsin.lna.plugin.command.CreditsList;
 import io.github.vxnsin.lna.plugin.command.LnaCommands;
 import io.github.vxnsin.lna.plugin.extinguisher.Extinguishers;
+import io.github.vxnsin.lna.plugin.furniture.FurnitureListener;
+import io.github.vxnsin.lna.plugin.furniture.FurnitureService;
+import io.github.vxnsin.lna.plugin.world.WorldRules;
 import io.github.vxnsin.lna.plugin.hud.Glyphs;
 import io.github.vxnsin.lna.plugin.hud.HudService;
 import io.github.vxnsin.lna.plugin.item.CraftingGuard;
@@ -31,6 +34,7 @@ public final class LnaPlugin extends JavaPlugin {
     private Glyphs glyphs;
     private HudService hud;
     private Extinguishers extinguishers;
+    private FurnitureService furniture;
     private CreditsList credits;
     private ResourcePack pack;
     private PackServer packServer;
@@ -64,10 +68,15 @@ public final class LnaPlugin extends JavaPlugin {
             }
         }
 
+        WorldRules worldRules = new WorldRules(getConfig().getConfigurationSection("world-rules"));
+        worldRules.applyToLoadedWorlds();
+
         hud = new HudService();
         extinguishers = new Extinguishers(items, glyphs, hud);
         extinguishers.start(this);
-        registerListeners(packDistributor, hud, extinguishers, new CraftingGuard(items));
+        furniture = new FurnitureService(items, (float) getConfig().getDouble("furniture.rotation-offset", 0));
+        registerListeners(packDistributor, hud, extinguishers, new CraftingGuard(items), worldRules,
+                new FurnitureListener(furniture));
         LnaCommands.register(this);
 
         getLogger().info(String.format("Loaded %d items and %d glyphs. Resource pack %s served at %s",
@@ -104,6 +113,10 @@ public final class LnaPlugin extends JavaPlugin {
 
     public Extinguishers extinguishers() {
         return extinguishers;
+    }
+
+    public FurnitureService furniture() {
+        return furniture;
     }
 
     public CreditsList credits() {

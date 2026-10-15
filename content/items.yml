@@ -305,6 +305,8 @@ feuerloescher_halter:
   name: "<white>Feuerlöscher-Wandhalter</white>"
   model: furniture/feuerloescher_halter.json
   tags: [furniture]
+  properties:
+    mount: wall
 
 druckknopfmelder:
   base: minecraft:paper
@@ -313,24 +315,34 @@ druckknopfmelder:
     - "<gray>Scheibe einschlagen, Knopf drücken: löst den Feueralarm aus.</gray>"
   model: furniture/druckknopfmelder.json
   tags: [furniture]
+  properties:
+    mount: wall
 
 rauchmelder:
   base: minecraft:paper
   name: "<white>Rauchmelder</white>"
   model: furniture/rauchmelder.json
   tags: [furniture]
+  properties:
+    mount: ceiling
+    hitbox: [0.6, 0.3]
 
 sprinkler:
   base: minecraft:paper
   name: "<white>Sprinklerkopf</white>"
   model: furniture/sprinkler.json
   tags: [furniture]
+  properties:
+    mount: ceiling
+    hitbox: [0.5, 0.5]
 
 wandhydrant:
   base: minecraft:paper
   name: "<red>Wandhydrant</red>"
   model: furniture/wandhydrant.json
   tags: [furniture]
+  properties:
+    mount: wall
 
 brandschutztuer:
   base: minecraft:paper
@@ -339,6 +351,8 @@ brandschutztuer:
     - "<gray>Selbstschließend. Muss immer frei schließen können.</gray>"
   model: furniture/brandschutztuer.json
   tags: [furniture]
+  properties:
+    hitbox: [1, 2]
 
 akku_quarantaenebox:
   base: minecraft:paper

@@ -1,5 +1,19 @@
 # Lass nichts anbrennen - plugin configuration
 
+world-rules:
+  # Worlds managed by the plugin. Empty list: all worlds.
+  # Vanilla fire spread is always disabled there (the fire simulation controls fire blocks itself).
+  worlds: []
+  mob-spawning: false
+  weather-cycle: false
+  daylight-cycle: false
+  # Fixed time of day when the daylight cycle is off (6000 = noon).
+  time: 6000
+
+furniture:
+  # Extra rotation in degrees for all placed models. Set to 180 if placed objects face the wrong way.
+  rotation-offset: 0
+
 pack:
   # Host name or IP that clients use to download the resource pack.
   # Empty: server-ip from server.properties, otherwise the LAN address of this machine.
