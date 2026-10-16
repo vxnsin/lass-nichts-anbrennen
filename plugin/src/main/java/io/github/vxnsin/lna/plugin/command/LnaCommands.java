@@ -50,6 +50,7 @@ public final class LnaCommands {
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             Commands commands = event.registrar();
             commands.register(root(plugin), "Werkzeuge für Lass nichts anbrennen");
+            PlayerCommands.register(commands, plugin);
             commands.register(Commands.literal("credits")
                     .executes(context -> {
                         plugin.credits().send(context.getSource().getSender());
@@ -287,7 +288,7 @@ public final class LnaCommands {
         return targets.size();
     }
 
-    private static Player player(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    static Player player(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         if (context.getSource().getExecutor() instanceof Player player) {
             return player;
         }

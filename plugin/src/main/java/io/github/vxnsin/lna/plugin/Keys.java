@@ -26,6 +26,10 @@ public final class Keys {
     public static final NamespacedKey HAZARD = new NamespacedKey(NAMESPACE, "hazard");
     /** Id of a clickable object that is deliberately fine (hazard hunt false alarm). */
     public static final NamespacedKey SAFE = new NamespacedKey(NAMESPACE, "safe");
+    /** Player data: ids of missions stamped in the fire safety pass. */
+    public static final NamespacedKey PASS = new NamespacedKey(NAMESPACE, "pass");
+    /** Marks the lobby items a player receives in the hub. */
+    public static final NamespacedKey LOBBY_ITEM = new NamespacedKey(NAMESPACE, "lobby_item");
     /** Mission id of a clickable mission board entry. */
     public static final NamespacedKey MISSION = new NamespacedKey(NAMESPACE, "mission");
 

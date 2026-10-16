@@ -17,6 +17,9 @@ import io.github.vxnsin.lna.plugin.map.MapBuilder;
 import io.github.vxnsin.lna.plugin.map.MapDefinition;
 import io.github.vxnsin.lna.plugin.map.MapLoader;
 import io.github.vxnsin.lna.plugin.map.PlacedMaps;
+import io.github.vxnsin.lna.plugin.mission.MissionInfo;
+import io.github.vxnsin.lna.plugin.mission.MissionService;
+import io.github.vxnsin.lna.plugin.mission.PartyService;
 import java.io.File;
 import java.util.Map;
 import io.github.vxnsin.lna.plugin.pack.PackDistributor;
@@ -46,6 +49,8 @@ public final class LnaPlugin extends JavaPlugin {
     private Map<String, MapDefinition> maps;
     private PlacedMaps placedMaps;
     private MapBuilder mapBuilder;
+    private PartyService parties;
+    private MissionService missions;
     private CreditsList credits;
     private ResourcePack pack;
     private PackServer packServer;
@@ -95,6 +100,16 @@ public final class LnaPlugin extends JavaPlugin {
         placedMaps = new PlacedMaps(new File(getDataFolder(), "placed-maps.yml"));
         placedMaps.load();
         mapBuilder = new MapBuilder(furniture, items, glyphs);
+
+        parties = new PartyService();
+        try (InputStream in = getResource("missions.yml")) {
+            missions = new MissionService(this, parties, MissionInfo.load(in));
+        } catch (IOException | RuntimeException e) {
+            getLogger().log(Level.SEVERE, "missions.yml is missing or invalid", e);
+            missions = new MissionService(this, parties, Map.of());
+        }
+        missions.start();
+        registerListeners(missions);
         LnaCommands.register(this);
 
         getLogger().info(String.format("Loaded %d items and %d glyphs. Resource pack %s served at %s",
@@ -103,6 +118,9 @@ public final class LnaPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (missions != null) {
+            missions.stopAll();
+        }
         if (fires != null) {
             fires.clear();
         }
@@ -154,6 +172,14 @@ public final class LnaPlugin extends JavaPlugin {
 
     public MapBuilder mapBuilder() {
         return mapBuilder;
+    }
+
+    public PartyService parties() {
+        return parties;
+    }
+
+    public MissionService missions() {
+        return missions;
     }
 
     public CreditsList credits() {

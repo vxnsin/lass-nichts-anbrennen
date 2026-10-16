@@ -1,0 +1,46 @@
+# Campaign missions shown on the mission table and in the campaign menu.
+#   number       order in the campaign
+#   title        display title; description: short text for the mission card
+#   map          map id (maps/<id>.yml) that must be built with /lna map build <id>
+#   icon         custom item shown on the mission card
+#   type         mission logic: hazard_hunt (more types follow)
+#   duration     time limit in seconds
+#   available    false = shown as "bald verfügbar"
+
+branddreieck:
+  number: 1
+  title: "Das Branddreieck"
+  description: "Lösche drei Brände, indem du jeweils eine Seite des Branddreiecks entfernst."
+  icon: feuerloescher_abc
+  available: false
+
+gefahrensuche:
+  number: 2
+  title: "Gefahren-Detektiv"
+  description: "Finde im Büro der BrandNeu Versand GmbH zehn versteckte Brandgefahren."
+  map: buero
+  icon: klemmbrett
+  type: hazard_hunt
+  duration: 300
+  available: true
+
+akku_alarm:
+  number: 3
+  title: "Akku-Alarm im Retourenlager"
+  description: "Prüfe Retouren auf beschädigte Akkus, bevor einer durchgeht."
+  icon: akku_geblaeht
+  available: false
+
+fettbrand:
+  number: 4
+  title: "Fettbrand in der Pausenküche"
+  description: "Lösche einen Fettbrand richtig und wähle für jeden Brand den passenden Löscher."
+  icon: topfdeckel
+  available: false
+
+ernstfall:
+  number: 5
+  title: "Ernstfall im Logistikzentrum"
+  description: "Alarm auslösen, Notruf absetzen, alle zum Sammelplatz bringen – im Team."
+  icon: druckknopfmelder
+  available: false
