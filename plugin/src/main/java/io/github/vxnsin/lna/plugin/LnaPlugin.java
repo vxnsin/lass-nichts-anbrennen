@@ -13,6 +13,12 @@ import io.github.vxnsin.lna.plugin.hud.Glyphs;
 import io.github.vxnsin.lna.plugin.hud.HudService;
 import io.github.vxnsin.lna.plugin.item.CraftingGuard;
 import io.github.vxnsin.lna.plugin.item.ItemRegistry;
+import io.github.vxnsin.lna.plugin.map.MapBuilder;
+import io.github.vxnsin.lna.plugin.map.MapDefinition;
+import io.github.vxnsin.lna.plugin.map.MapLoader;
+import io.github.vxnsin.lna.plugin.map.PlacedMaps;
+import java.io.File;
+import java.util.Map;
 import io.github.vxnsin.lna.plugin.pack.PackDistributor;
 import io.github.vxnsin.lna.plugin.pack.PackServer;
 import io.github.vxnsin.lna.plugin.pack.ResourcePack;
@@ -37,6 +43,9 @@ public final class LnaPlugin extends JavaPlugin {
     private Extinguishers extinguishers;
     private FurnitureService furniture;
     private FireService fires;
+    private Map<String, MapDefinition> maps;
+    private PlacedMaps placedMaps;
+    private MapBuilder mapBuilder;
     private CreditsList credits;
     private ResourcePack pack;
     private PackServer packServer;
@@ -81,6 +90,11 @@ public final class LnaPlugin extends JavaPlugin {
         furniture = new FurnitureService(items, (float) getConfig().getDouble("furniture.rotation-offset", 0));
         registerListeners(packDistributor, hud, extinguishers, new CraftingGuard(items), worldRules,
                 new FurnitureListener(furniture));
+
+        maps = new MapLoader(getLogger()).load(getFile(), getDataFolder());
+        placedMaps = new PlacedMaps(new File(getDataFolder(), "placed-maps.yml"));
+        placedMaps.load();
+        mapBuilder = new MapBuilder(furniture, items, glyphs);
         LnaCommands.register(this);
 
         getLogger().info(String.format("Loaded %d items and %d glyphs. Resource pack %s served at %s",
@@ -128,6 +142,18 @@ public final class LnaPlugin extends JavaPlugin {
 
     public FireService fires() {
         return fires;
+    }
+
+    public Map<String, MapDefinition> maps() {
+        return maps;
+    }
+
+    public PlacedMaps placedMaps() {
+        return placedMaps;
+    }
+
+    public MapBuilder mapBuilder() {
+        return mapBuilder;
     }
 
     public CreditsList credits() {

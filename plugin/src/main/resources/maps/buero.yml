@@ -1,0 +1,90 @@
+# Office of the online retailer "BrandNeu Versand GmbH" with ten hidden fire hazards (mission 2).
+# Map format: see hub.yml.
+
+name: "Büro – BrandNeu Versand GmbH"
+height: 4
+floor: minecraft:light_gray_concrete
+ceiling: minecraft:white_concrete
+light: minecraft:sea_lantern
+light-spacing: 4
+
+legend:
+  "#": { wall: [minecraft:white_concrete] }
+  "W": { wall: [minecraft:white_concrete, minecraft:glass, minecraft:glass, minecraft:white_concrete] }
+  ".": {}
+  "D": { door: minecraft:oak_door, facing: south }
+  "O": { door: minecraft:iron_door, facing: east }
+  "T": { block: "minecraft:spruce_slab[type=top]" }
+  "c": { block: "minecraft:spruce_stairs[facing=south]" }
+  "b": { block: minecraft:bookshelf }
+  "S": { spawn: east }
+  # Hazards
+  "h": { objects: [ { id: heizluefter, facing: east, hazard: heizluefter } ] }
+  "s": { objects: [ { id: mehrfachsteckdose, prop: true, facing: south, hazard: steckdosen } ] }
+  "x": { objects: [ { id: kabel_beschaedigt, prop: true, facing: south, hazard: kabel } ] }
+  "P": { block: "minecraft:spruce_slab[type=top]", objects: [ { id: powerbank_geblaeht, prop: true, facing: south, y: 2, hazard: powerbank } ] }
+  "L": { block: "minecraft:spruce_slab[type=top]", objects: [ { id: ladegeraet_billig, prop: true, facing: south, y: 2, hazard: ladegeraet } ] }
+  "v": { objects: [ { id: feuerloescher_abc, prop: true, facing: east, hazard: verdeckt } ] }
+  "C": { block: minecraft:cauldron, objects: [ { id: akku_beschaedigt, prop: true, facing: south, y: 2, hazard: akku } ] }
+  "G": { objects: [ { id: brandschutztuer, facing: east, collision: false }, { id: holzkeil, prop: true, facing: north, hazard: keil } ] }
+  "B": { block: minecraft:barrel, hazard: fluchtweg }
+  "K": { block: minecraft:smooth_quartz, objects: [ { id: kaffeemaschine, facing: north, y: 2, hazard: kaffee } ] }
+  # Things that are fine (reporting them counts as a false alarm)
+  "F": { objects: [ { id: fluchtplan, facing: west, y: 2, safe: fluchtplan } ] }
+  "r": { objects: [ { id: rauchmelder, y: 4, safe: rauchmelder } ] }
+  "l": { block: "minecraft:spruce_slab[type=top]", objects: [ { id: ladegeraet, prop: true, facing: south, y: 2, safe: ladegeraet_ok } ] }
+  "Q": { objects: [ { id: akku_ladeschrank, facing: north, safe: ladeschrank } ] }
+  "E": { objects: [ { id: schild_feuerloescher, facing: east, y: 3 }, { id: feuerloescher_abc, prop: true, facing: east, safe: loescher_ok } ] }
+  "X": { objects: [ { id: schild_notausgang, facing: west, y: 3, safe: notausgang } ] }
+
+plan:
+  - "#####WWW#####WWW#####"
+  - "#h.ss....F#....r....#"
+  - "#.TT..TT..#.TP..TL..#"
+  - "#.cc..cc..#.cc..cc..#"
+  - "#x........#vb.....Q.#"
+  - "#.........#C.......l#"
+  - "#####D#########D#####"
+  - "#E.........G.......XO"
+  - "#..S..K...#...BB....#"
+  - "#####################"
+
+hazards:
+  steckdosen:
+    title: "Mehrfachsteckdosen hintereinander"
+    explanation: "Hintereinandergesteckte Steckdosenleisten überlasten die Leitung. Nur eine Leiste pro Wandsteckdose."
+  heizluefter:
+    title: "Heizlüfter direkt an der Wand und an Papier"
+    explanation: "Heizlüfter brauchen Abstand zu Papier, Stoffen und Möbeln und dürfen nicht unbeaufsichtigt laufen."
+  kabel:
+    title: "Beschädigtes Kabel"
+    explanation: "Beschädigte Isolierung kann Kurzschlüsse und Brände auslösen. Gerät außer Betrieb nehmen und melden."
+  powerbank:
+    title: "Aufgeblähte Powerbank lädt"
+    explanation: "Aufgeblähte Akkus können sich selbst entzünden. Nicht laden, sofort in die Akku-Quarantänebox."
+  ladegeraet:
+    title: "Billig-Ladegerät ohne Prüfzeichen"
+    explanation: "Nur geprüfte Ladegeräte verwenden. Ein beschädigtes Kabel ist zusätzlich Brandgefahr."
+  verdeckt:
+    title: "Feuerlöscher hinter dem Regal"
+    explanation: "Feuerlöscher müssen sichtbar und frei zugänglich sein. Im Ernstfall zählt jede Sekunde."
+  akku:
+    title: "Beschädigter Akku im Papierkorb"
+    explanation: "Beschädigte Akkus gehören in die Akku-Quarantänebox, nicht in den Müll. Im Papierkorb können sie einen Brand auslösen."
+  keil:
+    title: "Brandschutztür verkeilt"
+    explanation: "Brandschutztüren müssen selbst schließen können, sonst breiten sich Feuer und Rauch aus."
+  fluchtweg:
+    title: "Fluchtweg zugestellt"
+    explanation: "Flucht- und Rettungswege müssen immer frei sein, auch nur kurz abgestellte Kisten sind tabu."
+  kaffee:
+    title: "Kaffeemaschine läuft unbeaufsichtigt"
+    explanation: "Elektrogeräte nach Gebrauch ausschalten, besonders vor Feierabend."
+
+safe:
+  fluchtplan: "Der Flucht- und Rettungsplan hängt gut sichtbar. Richtig so!"
+  rauchmelder: "Der Rauchmelder ist frei und funktionsfähig. Richtig so!"
+  ladegeraet_ok: "Original-Ladegerät mit Prüfzeichen. Kein Problem."
+  ladeschrank: "Akkus werden im feuerfesten Ladeschrank geladen. Vorbildlich!"
+  loescher_ok: "Der Feuerlöscher hängt sichtbar und ist gekennzeichnet. Richtig so!"
+  notausgang: "Der Notausgang ist gekennzeichnet und frei. Richtig so!"

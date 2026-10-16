@@ -20,5 +20,14 @@ public final class Keys {
     /** Number of barrier blocks (collision) above the hitbox base. */
     public static final NamespacedKey FURNITURE_CELLS = new NamespacedKey(NAMESPACE, "cells");
 
+    /** Id of the map that created an entity (removed when the map is rebuilt). */
+    public static final NamespacedKey MAP = new NamespacedKey(NAMESPACE, "map");
+    /** Hazard id of a clickable object (hazard hunt). */
+    public static final NamespacedKey HAZARD = new NamespacedKey(NAMESPACE, "hazard");
+    /** Id of a clickable object that is deliberately fine (hazard hunt false alarm). */
+    public static final NamespacedKey SAFE = new NamespacedKey(NAMESPACE, "safe");
+    /** Mission id of a clickable mission board entry. */
+    public static final NamespacedKey MISSION = new NamespacedKey(NAMESPACE, "mission");
+
     private Keys() {}
 }

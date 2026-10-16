@@ -6,6 +6,15 @@ val minecraftVersion = providers.gradleProperty("minecraftVersion")
 
 dependencies {
     compileOnly(libs.paper.api)
+
+    testImplementation(libs.snakeyaml)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.launcher)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 // Output of the pack builder (pack.zip, pack.sha1, registry.json, credits.json), embedded under lna/.

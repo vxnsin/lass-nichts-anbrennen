@@ -1,0 +1,75 @@
+# Hub: classroom at the vocational school with the safety basics and the assembly point outside.
+#
+# Map format (shared by all maps):
+#   plan       rows from north (top) to south (bottom), columns from west (left) to east (right);
+#              one character = one block column. The builder places the map with its north-west corner
+#              at the player's position and the floor one block below the player's feet.
+#   height     wall height in blocks; the ceiling sits on top (cells with roof: false stay open)
+#   floor      default floor block; ceiling / light: ceiling block and lamp block (every light-spacing cells)
+#   legend     what each plan character means:
+#     wall: [blocks]     wall column, bottom to top (the last block repeats up to the height)
+#     floor / roof       override floor block, roof: false for open-air cells
+#     door: block        vanilla door (two blocks high), facing: north|east|south|west
+#     block: data        one block on the floor (e.g. a desk "minecraft:spruce_slab[type=top]")
+#     pillar: [blocks]   blocks stacked on the floor
+#     spawn: facing      player spawn of the map
+#     text: key          floating text (from texts) at eye height
+#     hazard / safe      on a block cell: makes the block itself clickable for missions
+#     objects: list      custom items: id, facing, y (1 = standing on the floor), prop (decoration),
+#                        collision, hazard / safe (keys from the hazards / safe sections, used by missions)
+
+name: "Hub – Berufsschule"
+height: 4
+floor: minecraft:birch_planks
+ceiling: minecraft:white_concrete
+light: minecraft:sea_lantern
+light-spacing: 4
+
+legend:
+  "#": { wall: [minecraft:white_concrete] }
+  "W": { wall: [minecraft:white_concrete, minecraft:glass, minecraft:glass, minecraft:white_concrete] }
+  "K": { wall: [minecraft:white_concrete, minecraft:black_concrete, minecraft:black_concrete, minecraft:white_concrete] }
+  ".": {}
+  ",": { floor: minecraft:grass_block, roof: false }
+  "p": { floor: minecraft:dirt_path, roof: false }
+  "D": { door: minecraft:oak_door, facing: south }
+  "T": { block: "minecraft:spruce_slab[type=top]" }
+  "c": { block: "minecraft:spruce_stairs[facing=south]" }
+  "S": { spawn: north }
+  "i": { text: willkommen }
+  "m": { text: missionen }
+  "F": { objects: [ { id: fluchtplan, facing: east, y: 2 } ] }
+  "E": { objects: [ { id: schild_feuerloescher, facing: west, y: 3 }, { id: feuerloescher_abc, prop: true, facing: west } ] }
+  "H": { objects: [ { id: schild_erste_hilfe, facing: east, y: 3 } ] }
+  "N": { objects: [ { id: schild_notausgang, facing: north, y: 3 } ] }
+  "R": { objects: [ { id: druckknopfmelder, facing: west, y: 2 }, { id: schild_brandmelder, facing: west, y: 3 } ] }
+  "P": { floor: minecraft:grass_block, roof: false, pillar: [minecraft:spruce_log, minecraft:spruce_log] }
+  "A": { floor: minecraft:dirt_path, roof: false, objects: [ { id: schild_sammelstelle, facing: north, y: 2 } ] }
+
+plan:
+  - "##WWW#KKKKK#WWW##"
+  - "#F.....i.......E#"
+  - "#.............m.#"
+  - "#..TT..TT..TT...#"
+  - "#..cc..cc..cc...#"
+  - "#.......S.......#"
+  - "#..TT..TT..TT...#"
+  - "#..cc..cc..cc...#"
+  - "#H......N......R#"
+  - "########D########"
+  - ",,,,,,,,p,,,,,,,,"
+  - ",,,,,,,,p,,,,,,,,"
+  - ",,,,,,,,pppppA,,,"
+  - ",,,,,,,,,,,,,P,,,"
+  - ",,,,,,,,,,,,,,,,,"
+
+texts:
+  willkommen: |-
+    <gold><bold>Lass nichts anbrennen</bold></gold>
+    <white>Willkommen bei der BrandNeu Versand GmbH!</white>
+    <gray>Finde den Flucht- und Rettungsplan, den Feuerlöscher,</gray>
+    <gray>den Druckknopfmelder und draußen die Sammelstelle.</gray>
+  missionen: |-
+    <gold><bold>Missionen</bold></gold>
+    <white>Mission 2: Gefahren-Detektiv</white>
+    <gray>/lna mission start gefahrensuche</gray>

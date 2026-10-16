@@ -37,6 +37,8 @@ public final class FurnitureService {
 
     public static final String TAG_FURNITURE = "furniture";
     public static final String TAG_SIGN = "sign";
+    /** Furniture id of block markers (hitboxes without a model). */
+    public static final String MARKER_ID = "marker";
 
     /** Placement rules resolved from the item properties. */
     public record Placement(Mount mount, float width, float height, boolean collision) {}
@@ -108,12 +110,22 @@ public final class FurnitureService {
                 return Optional.of("Hier ist kein Platz.");
             }
         }
-        World world = target.getWorld();
         Location center = target.getLocation().add(0.5, 0.5, 0.5);
-        if (!world.getNearbyEntitiesByType(Interaction.class, center, 0.45).isEmpty()) {
+        if (!target.getWorld().getNearbyEntitiesByType(Interaction.class, center, 0.45).isEmpty()) {
             return Optional.of("Hier steht schon etwas.");
         }
+        placeAt(item, target, front, placement);
+        return Optional.empty();
+    }
 
+    /**
+     * Places an object in {@code target} without any checks (used by the map builder).
+     * {@code front} is the direction the model front faces; for wall mounts the wall is behind it.
+     */
+    public Interaction placeAt(CustomItem item, Block target, BlockFace front, Placement placement) {
+        World world = target.getWorld();
+        Location center = target.getLocation().add(0.5, 0.5, 0.5);
+        int cells = Math.max(1, (int) Math.ceil(placement.height()));
         float yaw = yawFor(front) + rotationOffset;
         ItemDisplay display = world.spawn(center, ItemDisplay.class, entity -> {
             entity.setItemStack(items.create(item));
@@ -128,7 +140,7 @@ public final class FurnitureService {
         double hitboxY = placement.mount() == Mount.CEILING ? target.getY() + 1 - placement.height() : target.getY();
         Location hitboxLocation = new Location(world, target.getX() + 0.5, hitboxY, target.getZ() + 0.5);
         int collisionCells = placement.collision() ? cells : 0;
-        world.spawn(hitboxLocation, Interaction.class, entity -> {
+        Interaction hitbox = world.spawn(hitboxLocation, Interaction.class, entity -> {
             entity.setInteractionWidth(placement.width());
             entity.setInteractionHeight(placement.height());
             entity.setResponsive(true);
@@ -141,7 +153,20 @@ public final class FurnitureService {
         for (int i = 0; i < collisionCells; i++) {
             target.getRelative(BlockFace.UP, i).setType(Material.BARRIER);
         }
-        return Optional.empty();
+        return hitbox;
+    }
+
+    /** Invisible clickable box around a block (e.g. barrels blocking an escape route in a mission map). */
+    public Interaction placeMarker(Block block) {
+        Location base = block.getLocation().add(0.5, -0.05, 0.5);
+        return block.getWorld().spawn(base, Interaction.class, entity -> {
+            entity.setInteractionWidth(1.1f);
+            entity.setInteractionHeight(1.1f);
+            entity.setResponsive(true);
+            entity.setPersistent(true);
+            entity.getPersistentDataContainer().set(Keys.FURNITURE_ID, PersistentDataType.STRING, MARKER_ID);
+            entity.getPersistentDataContainer().set(Keys.FURNITURE_CELLS, PersistentDataType.INTEGER, 0);
+        });
     }
 
     /** Removes the object belonging to this hitbox, including its model and barrier blocks. */

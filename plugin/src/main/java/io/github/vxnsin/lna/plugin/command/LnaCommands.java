@@ -12,7 +12,11 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.github.vxnsin.lna.plugin.LnaPlugin;
 import io.github.vxnsin.lna.plugin.fire.Fire;
 import io.github.vxnsin.lna.plugin.fire.FireClass;
+import io.github.vxnsin.lna.plugin.furniture.FurnitureListener;
 import io.github.vxnsin.lna.plugin.item.CustomItem;
+import io.github.vxnsin.lna.plugin.map.MapBuilder;
+import io.github.vxnsin.lna.plugin.map.MapDefinition;
+import io.github.vxnsin.lna.plugin.map.PlacedMaps.PlacedMap;
 import io.github.vxnsin.lna.plugin.pack.PackDistributor;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -27,6 +31,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -110,6 +115,7 @@ public final class LnaCommands {
                             return Command.SINGLE_SUCCESS;
                         }))
                 .then(fire(plugin))
+                .then(map(plugin))
                 .then(Commands.literal("pack")
                         .executes(context -> {
                             PackDistributor distributor = plugin.packDistributor();
@@ -165,6 +171,78 @@ public final class LnaCommands {
                                     Placeholder.unparsed("count", String.valueOf(count)));
                             return Command.SINGLE_SUCCESS;
                         }));
+    }
+
+    /** /lna map list | build &lt;map&gt; | tp &lt;map&gt;: build maps from maps/*.yml at the player's position. */
+    private static LiteralArgumentBuilder<CommandSourceStack> map(LnaPlugin plugin) {
+        return Commands.literal("map")
+                .requires(source -> source.getSender().hasPermission(FurnitureListener.BUILD_PERMISSION))
+                .then(Commands.literal("list")
+                        .executes(context -> {
+                            var sender = context.getSource().getSender();
+                            plugin.message(sender, "<gold>Maps:</gold>");
+                            plugin.maps().values().forEach(map -> plugin.message(sender,
+                                    "<gray>•</gray> <white><id></white> <gray><name> (<size>)</gray><built>",
+                                    Placeholder.unparsed("id", map.id()),
+                                    Placeholder.unparsed("name", map.name()),
+                                    Placeholder.unparsed("size", map.width() + "×" + map.depth()),
+                                    Placeholder.parsed("built", plugin.placedMaps().get(map.id()).isPresent()
+                                            ? " <green>gebaut</green>" : "")));
+                            return Command.SINGLE_SUCCESS;
+                        }))
+                .then(Commands.literal("build")
+                        .then(Commands.argument("map", StringArgumentType.word())
+                                .suggests((context, builder) -> {
+                                    plugin.maps().keySet().stream()
+                                            .filter(id -> id.startsWith(builder.getRemainingLowerCase()))
+                                            .forEach(builder::suggest);
+                                    return builder.buildFuture();
+                                })
+                                .executes(context -> buildMap(plugin, context))))
+                .then(Commands.literal("tp")
+                        .then(Commands.argument("map", StringArgumentType.word())
+                                .suggests((context, builder) -> {
+                                    plugin.placedMaps().all().stream().map(PlacedMap::id)
+                                            .filter(id -> id.startsWith(builder.getRemainingLowerCase()))
+                                            .forEach(builder::suggest);
+                                    return builder.buildFuture();
+                                })
+                                .executes(context -> {
+                                    Player player = player(context);
+                                    String id = StringArgumentType.getString(context, "map");
+                                    Optional<Location> spawn = plugin.placedMaps().get(id).flatMap(PlacedMap::spawn);
+                                    if (spawn.isEmpty()) {
+                                        plugin.message(player, "<red>Die Map <id> ist noch nicht gebaut.</red>",
+                                                Placeholder.unparsed("id", id));
+                                        return 0;
+                                    }
+                                    player.teleport(spawn.get());
+                                    return Command.SINGLE_SUCCESS;
+                                })));
+    }
+
+    private static int buildMap(LnaPlugin plugin, CommandContext<CommandSourceStack> context)
+            throws CommandSyntaxException {
+        Player player = player(context);
+        String id = StringArgumentType.getString(context, "map");
+        MapDefinition map = plugin.maps().get(id);
+        if (map == null) {
+            plugin.message(player, "<red>Unbekannte Map: <id></red>", Placeholder.unparsed("id", id));
+            return 0;
+        }
+        MapBuilder.Result result = plugin.mapBuilder().build(map, player.getLocation());
+        try {
+            plugin.placedMaps().put(result.placed());
+        } catch (IOException e) {
+            plugin.getLogger().log(Level.WARNING, "Could not save placed-maps.yml", e);
+        }
+        result.placed().spawn().ifPresent(player::teleport);
+        plugin.message(player, "<green>Map gebaut:</green> <white><name></white> <gray>(<size>)</gray>",
+                Placeholder.unparsed("name", map.name()),
+                Placeholder.unparsed("size", map.width() + "×" + map.depth()));
+        result.warnings().forEach(warning -> plugin.message(player, "<gold>Warnung:</gold> <gray><text></gray>",
+                Placeholder.unparsed("text", warning)));
+        return Command.SINGLE_SUCCESS;
     }
 
     private static int startFire(LnaPlugin plugin, CommandContext<CommandSourceStack> context, int intensity)
