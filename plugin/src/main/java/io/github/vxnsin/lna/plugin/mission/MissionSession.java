@@ -85,6 +85,9 @@ public abstract class MissionSession {
     /** A player of this mission right-clicked a placed object. */
     protected void onInteract(Player player, Interaction hitbox) {}
 
+    /** A player of this mission clicked a quiz answer (1-based). */
+    protected void onAnswer(Player player, int answer) {}
+
     /** A player of this mission completely extinguished a simulated fire. */
     protected void onFireExtinguished(Player player, Fire fire) {}
 

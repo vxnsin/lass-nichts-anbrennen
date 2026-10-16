@@ -56,7 +56,12 @@ public final class FireService {
 
     /** Starts a fire in the given cell (usually the air block above the burning object). */
     public Fire ignite(Block origin, FireClass fireClass, double intensity) {
-        Fire fire = new Fire(origin, fireClass, intensity);
+        return ignite(origin, fireClass, intensity, false);
+    }
+
+    /** Starts a fire; a fed fire cannot be sprayed out, only smothered (see {@link Fire#fed()}). */
+    public Fire ignite(Block origin, FireClass fireClass, double intensity, boolean fed) {
+        Fire fire = new Fire(origin, fireClass, intensity, fed);
         fires.put(fire.id(), fire);
         updateFlames(fire);
         return fire;
@@ -95,7 +100,12 @@ public final class FireService {
                 continue;
             }
             hit = true;
-            if (agent == Agent.WATER && fire.fireClass() == FireClass.F) {
+            if (fire.fed()) {
+                if (hint(player, "fed")) {
+                    player.sendActionBar(Component.text("Die Flammen brennen weiter – entferne eine Seite des "
+                            + "Branddreiecks!", NamedTextColor.GOLD));
+                }
+            } else if (agent == Agent.WATER && fire.fireClass() == FireClass.F) {
                 flare(fire, player);
             } else if (agent == Agent.WATER && fire.fireClass() == FireClass.ELECTRIC) {
                 shock(fire, player);

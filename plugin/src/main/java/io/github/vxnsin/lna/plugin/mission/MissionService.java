@@ -95,6 +95,13 @@ public final class MissionService implements Listener {
         return session.isPresent();
     }
 
+    /** Forwards a quiz answer to the player's mission. Returns false if the player is not in a mission. */
+    public boolean answer(Player player, int answer) {
+        Optional<MissionSession> session = sessionOf(player);
+        session.ifPresent(s -> s.onAnswer(player, answer));
+        return session.isPresent();
+    }
+
     public void stopAll() {
         List.copyOf(sessions).forEach(MissionSession::finish);
     }

@@ -1,0 +1,46 @@
+# Workshop lab for mission 1 "Das Branddreieck": three fires, each put out by removing one side of the
+# fire triangle (oxygen: lid, fuel: gas valve, heat: cooling with water).
+# Map format: see hub.yml and kueche.yml. Additional keys used here:
+#   fire.solution: lid | valve   only smothering or closing the valve puts the fire out (sprays do not help)
+#   action: valve                clickable gas valve
+
+name: "Labor – Werkstatt der Berufsschule"
+height: 4
+floor: minecraft:polished_andesite
+ceiling: minecraft:white_concrete
+light: minecraft:sea_lantern
+light-spacing: 4
+
+legend:
+  "#": { wall: [minecraft:white_concrete] }
+  ".": {}
+  "S": { spawn: north }
+  "t":
+    block: minecraft:cauldron
+    fire: { class: a, order: 1, y: 2, solution: lid, title: "Papier in der Metalltonne", hint: "Sauerstoff entziehen: Nimm den Deckel vom Tisch und klicke damit auf die Tonne." }
+  "k": { block: minecraft:smooth_quartz, objects: [ { id: topfdeckel, prop: true, facing: south, y: 2, give: true } ] }
+  "g":
+    block: minecraft:iron_block
+    fire: { class: c, order: 2, y: 2, solution: valve, title: "Flamme am Gasbrenner", hint: "Brennstoff entziehen: Löschen hilft nicht, solange Gas nachströmt. Schließe das Gasventil (Hebel daneben)." }
+  "v": { block: "minecraft:lever[face=floor,facing=north]", action: valve }
+  "p":
+    block: minecraft:barrel
+    fire: { class: a, order: 3, y: 2, title: "Brennender Papierkorb", hint: "Wärme entziehen: Der Wasserlöscher kühlt das Papier unter seine Zündtemperatur." }
+  "w": { objects: [ { id: feuerloescher_wasser, prop: true, facing: north, give: true } ] }
+  "i": { text: branddreieck }
+
+plan:
+  - "###############"
+  - "#.............#"
+  - "#.t.k...g.v...#"
+  - "#.............#"
+  - "#..p.....w....#"
+  - "#......S......#"
+  - "#....i........#"
+  - "###############"
+
+texts:
+  branddreieck: |-
+    <gold><bold>Das Branddreieck</bold></gold>
+    <white>Feuer braucht Brennstoff, Sauerstoff und Wärme.</white>
+    <gray>Nimm eine Seite weg – und das Feuer geht aus.</gray>

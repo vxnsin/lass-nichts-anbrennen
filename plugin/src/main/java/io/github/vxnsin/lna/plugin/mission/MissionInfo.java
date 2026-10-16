@@ -5,8 +5,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -14,7 +16,27 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 /** One campaign mission as described in missions.yml. */
 public record MissionInfo(String id, int number, String title, String description, String map, String icon,
-                          String type, int duration, boolean available) {
+                          String type, int duration, boolean available, List<Question> quiz) {
+
+    /** A quiz question with answer options; {@code correct} is the 1-based number of the right answer. */
+    public record Question(String text, List<String> answers, int correct, String explanation) {}
+
+    @SuppressWarnings("unchecked")
+    private static List<Question> quiz(Object value) {
+        if (!(value instanceof List<?> list)) {
+            return List.of();
+        }
+        List<Question> questions = new ArrayList<>();
+        for (Object element : list) {
+            Map<String, Object> q = (Map<String, Object>) element;
+            questions.add(new Question(
+                    String.valueOf(q.get("question")),
+                    ((List<Object>) q.get("answers")).stream().map(String::valueOf).toList(),
+                    ((Number) q.get("correct")).intValue(),
+                    String.valueOf(q.getOrDefault("explanation", ""))));
+        }
+        return List.copyOf(questions);
+    }
 
     /** Loads missions.yml, sorted by mission number. */
     @SuppressWarnings("unchecked")
@@ -36,7 +58,8 @@ public record MissionInfo(String id, int number, String title, String descriptio
                             String.valueOf(m.getOrDefault("icon", "klemmbrett")),
                             String.valueOf(m.getOrDefault("type", "")),
                             ((Number) m.getOrDefault("duration", 300)).intValue(),
-                            Boolean.TRUE.equals(m.get("available")));
+                            Boolean.TRUE.equals(m.get("available")),
+                            quiz(m.get("quiz")));
                 })
                 .sorted(Comparator.comparingInt(MissionInfo::number))
                 .forEach(mission -> missions.put(mission.id(), mission));

@@ -112,8 +112,13 @@ public final class MapBuilder {
                 if (cell.door() != null) {
                     placeDoor(world.getBlockAt(wx, y0 + 1, wz), cell.door(), cell.doorFacing());
                 }
-                if (cell.block() != null && (cell.hazard() != null || cell.safe() != null)) {
-                    tag(furniture.placeMarker(world.getBlockAt(wx, y0 + 1, wz)), map.id(), cell.hazard(), cell.safe());
+                if (cell.block() != null && (cell.hazard() != null || cell.safe() != null || cell.action() != null
+                        || cell.fire() != null)) {
+                    Interaction marker = furniture.placeMarker(world.getBlockAt(wx, y0 + 1, wz));
+                    tag(marker, map.id(), cell.hazard(), cell.safe());
+                    if (cell.action() != null) {
+                        marker.getPersistentDataContainer().set(Keys.ACTION, PersistentDataType.STRING, cell.action());
+                    }
                 }
                 for (MapObject object : cell.objects()) {
                     Optional<CustomItem> item = items.get(object.id());

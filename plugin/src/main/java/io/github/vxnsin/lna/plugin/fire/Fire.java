@@ -25,11 +25,21 @@ public final class Fire {
     private int smolderCycles;
     private long lastFlare;
     private Set<Block> flames = new HashSet<>();
+    private final boolean fed;
 
-    Fire(Block origin, FireClass fireClass, double intensity) {
+    Fire(Block origin, FireClass fireClass, double intensity, boolean fed) {
         this.origin = origin;
         this.fireClass = fireClass;
         this.intensity = intensity;
+        this.fed = fed;
+    }
+
+    /**
+     * True while fuel or oxygen keeps flowing in (e.g. gas from an open valve): spraying does not help,
+     * only taking away a side of the fire triangle (closing the valve, putting on a lid) puts it out.
+     */
+    public boolean fed() {
+        return fed;
     }
 
     public UUID id() {

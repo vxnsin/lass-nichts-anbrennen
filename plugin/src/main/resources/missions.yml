@@ -11,8 +11,25 @@ branddreieck:
   number: 1
   title: "Das Branddreieck"
   description: "Lösche drei Brände, indem du jeweils eine Seite des Branddreiecks entfernst."
+  map: labor
   icon: feuerloescher_abc
-  available: false
+  type: fire_training
+  duration: 300
+  available: true
+  quiz:
+    - question: "Welche drei Dinge braucht ein Feuer?"
+      answers: ["Brennstoff, Sauerstoff und Wärme", "Holz, Wasser und Wind", "Gas, Licht und Strom"]
+      correct: 1
+      explanation: "Das ist das Branddreieck. Fehlt eine Seite, geht das Feuer aus."
+    - question: "Warum geht der Brand in der Tonne aus, wenn man den Deckel auflegt?"
+      answers: ["Der Deckel kühlt das Papier", "Dem Feuer fehlt der Sauerstoff", "Das Papier verbrennt schneller"]
+      correct: 2
+      explanation: "Der Deckel sperrt die Luft aus: Ohne Sauerstoff erstickt das Feuer."
+    - question: "Was solltest du bei einem Brand an einer Gasleitung zuerst tun – wenn es gefahrlos geht?"
+      answers: ["Mit Wasser löschen", "Die Gaszufuhr schließen", "Das Fenster schließen"]
+      correct: 2
+      explanation: "Solange Gas nachströmt, brennt es weiter. Ventil zu nimmt dem Feuer den Brennstoff."
+  # quiz: optional questions after all fires; correct = number of the right answer (1-based)
 
 gefahrensuche:
   number: 2

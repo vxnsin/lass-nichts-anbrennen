@@ -34,6 +34,8 @@ public final class Keys {
     public static final NamespacedKey NPC = new NamespacedKey(NAMESPACE, "npc");
     /** Item id handed out when a player clicks this object during a mission (e.g. the extinguisher wall). */
     public static final NamespacedKey GIVE = new NamespacedKey(NAMESPACE, "give");
+    /** Action of a clickable map block (e.g. "valve": gas valve in mission 1). */
+    public static final NamespacedKey ACTION = new NamespacedKey(NAMESPACE, "action");
     /** Mission id of a clickable mission board entry. */
     public static final NamespacedKey MISSION = new NamespacedKey(NAMESPACE, "mission");
 

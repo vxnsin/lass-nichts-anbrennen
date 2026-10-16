@@ -1,6 +1,7 @@
 package io.github.vxnsin.lna.plugin.command;
 
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -47,6 +48,14 @@ final class PlayerCommands {
                                     error.ifPresent(text -> plugin.message(player, "<red><text></red>",
                                             Placeholder.unparsed("text", text)));
                                     return error.isPresent() ? 0 : Command.SINGLE_SUCCESS;
+                                })))
+                .then(Commands.literal("antwort")
+                        .then(Commands.argument("nummer", IntegerArgumentType.integer(1, 9))
+                                .executes(context -> {
+                                    Player player = LnaCommands.player(context);
+                                    boolean ok = plugin.missions().answer(player,
+                                            IntegerArgumentType.getInteger(context, "nummer"));
+                                    return ok ? Command.SINGLE_SUCCESS : 0;
                                 })))
                 .then(Commands.literal("stop")
                         .executes(context -> {

@@ -160,6 +160,7 @@ public final class MapLoader {
                 string(entry, "mission", null),
                 string(entry, "npc", null),
                 entry.containsKey("fire") ? fireSpot(map(entry.get("fire"), where + " fire")) : null,
+                string(entry, "action", null),
                 List.copyOf(objects));
     }
 
@@ -169,7 +170,8 @@ public final class MapLoader {
                 ((Number) fire.getOrDefault("order", 1)).intValue(),
                 ((Number) fire.getOrDefault("y", 1)).intValue(),
                 string(fire, "title", "Brand"),
-                string(fire, "hint", ""));
+                string(fire, "hint", ""),
+                string(fire, "solution", null));
     }
 
     private static void checkReferences(String key, String hazard, String safe, Map<String, Hazard> hazards,

@@ -56,6 +56,7 @@ public record MapDefinition(
             String mission,
             String npc,
             FireSpot fire,
+            String action,
             List<MapObject> objects) {
 
         public boolean isWall() {
@@ -78,8 +79,10 @@ public record MapDefinition(
      * @param fireClass fire class as written in the map (a, b, c, d, f, elektro)
      * @param order     position in the mission sequence
      * @param y         height of the fire cell above the floor (2 = on top of a block or furniture)
+     * @param solution  null: any suitable extinguisher; "lid": smother with the pot lid or fire blanket;
+     *                  "valve": close the valve (map cell with action: valve); sprays do not help with lid/valve
      */
-    public record FireSpot(String fireClass, int order, int y, String title, String hint) {}
+    public record FireSpot(String fireClass, int order, int y, String title, String hint, String solution) {}
 
     /** A fire hazard players have to find in the hazard hunt. */
     public record Hazard(String title, String explanation) {}
