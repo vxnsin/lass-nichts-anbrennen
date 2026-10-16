@@ -1,6 +1,10 @@
 package io.github.vxnsin.lna.plugin.extinguisher;
 
+import com.google.gson.JsonArray;
 import io.github.vxnsin.lna.plugin.Keys;
+import io.github.vxnsin.lna.plugin.fire.Agent;
+import io.github.vxnsin.lna.plugin.fire.FireClass;
+import io.github.vxnsin.lna.plugin.fire.FireService;
 import io.github.vxnsin.lna.plugin.hud.Glyphs;
 import io.github.vxnsin.lna.plugin.hud.HudService;
 import io.github.vxnsin.lna.plugin.item.CustomItem;
@@ -9,9 +13,11 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.Consumable;
 import io.papermc.paper.datacomponent.item.UseEffects;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import net.kyori.adventure.key.Key;
@@ -49,8 +55,9 @@ import org.bukkit.util.Vector;
  * (content/items.yml, use_models) by itself, and the server sprays while the item is in active use.
  * The use_effects component removes the movement slowdown that vanilla applies while using an item.
  *
- * <p>Item properties (content/items.yml): {@code capacity}, {@code range}, {@code spray} (powder|co2),
- * {@code spray_sound}.
+ * <p>Item properties (content/items.yml): {@code capacity}, {@code range}, {@code power} (intensity removed per
+ * burst), {@code agent} (powder|co2|foam|water|wet_chemical|metal_powder), {@code fire_classes}, {@code spray_sound}.
+ * Simulated fires are handled by {@link FireService}; vanilla fire and burning entities are extinguished directly.
  */
 public final class Extinguishers implements Listener {
 
@@ -68,16 +75,21 @@ public final class Extinguishers implements Listener {
     private static final int SOUND_INTERVAL_TICKS = 12;
     private static final int HUD_SEGMENTS = 10;
     private static final Particle.DustOptions POWDER = new Particle.DustOptions(Color.fromRGB(235, 238, 245), 1.5f);
+    private static final Particle.DustOptions FOAM = new Particle.DustOptions(Color.fromRGB(245, 240, 215), 2.0f);
+    private static final Particle.DustOptions WET_CHEMICAL = new Particle.DustOptions(Color.fromRGB(240, 230, 160), 1.6f);
+    private static final Particle.DustOptions METAL_POWDER = new Particle.DustOptions(Color.fromRGB(150, 150, 160), 1.3f);
 
     private final ItemRegistry items;
     private final Glyphs glyphs;
     private final HudService hud;
+    private final FireService fires;
     private final Map<UUID, Integer> lastSound = new HashMap<>();
 
-    public Extinguishers(ItemRegistry items, Glyphs glyphs, HudService hud) {
+    public Extinguishers(ItemRegistry items, Glyphs glyphs, HudService hud, FireService fires) {
         this.items = items;
         this.glyphs = glyphs;
         this.hud = hud;
+        this.fires = fires;
         items.onCreate(TAG, (stack, item) -> {
             makeUsable(stack);
             setFill(stack, item, capacity(item));
@@ -179,7 +191,9 @@ public final class Extinguishers implements Listener {
         Location eye = player.getEyeLocation();
         Vector direction = eye.getDirection();
         double range = item.doubleProperty("range", 6.0);
-        emitParticles(player.getWorld(), eye, direction, range, item.stringProperty("spray", "powder"));
+        Agent agent = Agent.parse(item.stringProperty("agent", "powder"));
+        emitParticles(player.getWorld(), eye, direction, range, agent);
+        fires.spray(player, eye, direction, range, agent, suitableClasses(item), item.doubleProperty("power", 4.0));
 
         UUID id = player.getUniqueId();
         if (now - lastSound.getOrDefault(id, Integer.MIN_VALUE / 2) >= SOUND_INTERVAL_TICKS) {
@@ -194,10 +208,23 @@ public final class Extinguishers implements Listener {
         }
     }
 
-    private void emitParticles(World world, Location eye, Vector direction, double range, String spray) {
+    /** Fire classes from the item property fire_classes (e.g. [A, B, C] or [B, electric]). */
+    private static Set<FireClass> suitableClasses(CustomItem item) {
+        Set<FireClass> classes = EnumSet.noneOf(FireClass.class);
+        if (item.properties().get("fire_classes") instanceof JsonArray array) {
+            array.forEach(value -> FireClass.parse(value.getAsString()).ifPresent(classes::add));
+        }
+        return classes;
+    }
+
+    private void emitParticles(World world, Location eye, Vector direction, double range, Agent agent) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         Location nozzle = eye.clone().add(direction.clone().multiply(0.6)).add(0, -0.25, 0);
-        Particle stream = "co2".equals(spray) ? Particle.SNOWFLAKE : Particle.CLOUD;
+        Particle stream = switch (agent) {
+            case CO2 -> Particle.SNOWFLAKE;
+            case WATER -> Particle.SPLASH;
+            default -> Particle.CLOUD;
+        };
         for (int i = 0; i < 6; i++) {
             Vector velocity = direction.clone()
                     .add(new Vector(random.nextGaussian(), random.nextGaussian(), random.nextGaussian()).multiply(0.08))
@@ -206,11 +233,20 @@ public final class Extinguishers implements Listener {
             world.spawnParticle(stream, nozzle, 0, velocity.getX(), velocity.getY(), velocity.getZ(),
                     0.35 + random.nextDouble() * 0.25);
         }
-        if (!"co2".equals(spray)) {
-            for (double distance = 1; distance <= range; distance += 1) {
-                Location point = nozzle.clone().add(direction.clone().multiply(distance));
-                double spread = 0.1 + distance * 0.1;
-                world.spawnParticle(Particle.DUST, point, 2, spread, spread, spread, 0, POWDER);
+        Particle.DustOptions dust = switch (agent) {
+            case FOAM -> FOAM;
+            case WET_CHEMICAL -> WET_CHEMICAL;
+            case METAL_POWDER -> METAL_POWDER;
+            case POWDER -> POWDER;
+            default -> null;
+        };
+        for (double distance = 1; distance <= range; distance += 1) {
+            Location point = nozzle.clone().add(direction.clone().multiply(distance));
+            double spread = 0.1 + distance * 0.1;
+            if (dust != null) {
+                world.spawnParticle(Particle.DUST, point, 2, spread, spread, spread, 0, dust);
+            } else if (agent == Agent.WATER) {
+                world.spawnParticle(Particle.FALLING_WATER, point, 3, spread, spread, spread, 0);
             }
         }
     }
@@ -247,7 +283,7 @@ public final class Extinguishers implements Listener {
                     if (block.getLocation().add(0.5, 0.5, 0.5).distanceSquared(center) > maxDistanceSquared) {
                         continue;
                     }
-                    if (Tag.FIRE.isTagged(block.getType())) {
+                    if (Tag.FIRE.isTagged(block.getType()) && !fires.isManagedFlame(block)) {
                         block.setType(Material.AIR);
                         center.getWorld().spawnParticle(Particle.SMOKE, block.getLocation().add(0.5, 0.3, 0.5), 6, 0.2, 0.1, 0.2, 0.02);
                         hits++;

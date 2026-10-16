@@ -8,7 +8,8 @@
 #   display     handheld (default) or generated; only used together with texture
 #   max_stack   1-99
 #   tags        behaviour hooks implemented by the plugin
-#               extinguisher  sprays, fill level, HUD (properties: capacity, range, spray, spray_sound)
+#               extinguisher  sprays, fill level, HUD (properties: capacity, range, power, agent,
+#                             fire_classes, spray_sound)
 #               hazard        can be reported in the hazard hunt (mission 2)
 #               furniture     placeable object (display entity, planned)
 #               sign          wall sign (display entity, planned)
@@ -35,7 +36,8 @@ feuerloescher_abc:
   properties:
     capacity: 100
     range: 6
-    spray: powder
+    agent: powder
+    power: 5
     fire_classes: [A, B, C]
 
 feuerloescher_co2:
@@ -56,7 +58,8 @@ feuerloescher_co2:
   properties:
     capacity: 60
     range: 4
-    spray: co2
+    agent: co2
+    power: 4
     fire_classes: [B, electric]
 
 feuerloescher_schaum:
@@ -75,7 +78,8 @@ feuerloescher_schaum:
   properties:
     capacity: 90
     range: 6
-    spray: powder
+    agent: foam
+    power: 5
     fire_classes: [A, B]
 
 feuerloescher_wasser:
@@ -95,7 +99,8 @@ feuerloescher_wasser:
   properties:
     capacity: 90
     range: 7
-    spray: powder
+    agent: water
+    power: 6
     fire_classes: [A]
 
 feuerloescher_fett:
@@ -115,7 +120,8 @@ feuerloescher_fett:
   properties:
     capacity: 80
     range: 4
-    spray: powder
+    agent: wet_chemical
+    power: 6
     fire_classes: [A, F]
 
 feuerloescher_metall:
@@ -135,7 +141,8 @@ feuerloescher_metall:
   properties:
     capacity: 100
     range: 3
-    spray: powder
+    agent: metal_powder
+    power: 5
     fire_classes: [D]
 
 feuerloeschspray:
@@ -153,7 +160,8 @@ feuerloeschspray:
   properties:
     capacity: 30
     range: 3
-    spray: powder
+    agent: foam
+    power: 3
     fire_classes: [A, B, F]
 
 # --- Ausrüstung -------------------------------------------------------------------------------

@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import io.github.vxnsin.lna.plugin.command.CreditsList;
 import io.github.vxnsin.lna.plugin.command.LnaCommands;
 import io.github.vxnsin.lna.plugin.extinguisher.Extinguishers;
+import io.github.vxnsin.lna.plugin.fire.FireService;
 import io.github.vxnsin.lna.plugin.furniture.FurnitureListener;
 import io.github.vxnsin.lna.plugin.furniture.FurnitureService;
 import io.github.vxnsin.lna.plugin.world.WorldRules;
@@ -35,6 +36,7 @@ public final class LnaPlugin extends JavaPlugin {
     private HudService hud;
     private Extinguishers extinguishers;
     private FurnitureService furniture;
+    private FireService fires;
     private CreditsList credits;
     private ResourcePack pack;
     private PackServer packServer;
@@ -72,7 +74,9 @@ public final class LnaPlugin extends JavaPlugin {
         worldRules.applyToLoadedWorlds();
 
         hud = new HudService();
-        extinguishers = new Extinguishers(items, glyphs, hud);
+        fires = new FireService();
+        fires.start(this);
+        extinguishers = new Extinguishers(items, glyphs, hud, fires);
         extinguishers.start(this);
         furniture = new FurnitureService(items, (float) getConfig().getDouble("furniture.rotation-offset", 0));
         registerListeners(packDistributor, hud, extinguishers, new CraftingGuard(items), worldRules,
@@ -85,6 +89,9 @@ public final class LnaPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (fires != null) {
+            fires.clear();
+        }
         if (packServer != null) {
             packServer.stop();
         }
@@ -117,6 +124,10 @@ public final class LnaPlugin extends JavaPlugin {
 
     public FurnitureService furniture() {
         return furniture;
+    }
+
+    public FireService fires() {
+        return fires;
     }
 
     public CreditsList credits() {
