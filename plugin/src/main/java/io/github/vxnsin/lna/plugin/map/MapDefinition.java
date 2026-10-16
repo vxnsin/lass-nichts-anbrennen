@@ -55,6 +55,7 @@ public record MapDefinition(
             String safe,
             String mission,
             String npc,
+            FireSpot fire,
             List<MapObject> objects) {
 
         public boolean isWall() {
@@ -69,7 +70,16 @@ public record MapDefinition(
      * @param collision overrides the item's collision setting, or null
      */
     public record MapObject(String id, BlockFace facing, int y, boolean prop, Boolean collision, String hazard,
-                            String safe) {}
+                            String safe, boolean give) {}
+
+    /**
+     * A place where a fire training mission starts a fire.
+     *
+     * @param fireClass fire class as written in the map (a, b, c, d, f, elektro)
+     * @param order     position in the mission sequence
+     * @param y         height of the fire cell above the floor (2 = on top of a block or furniture)
+     */
+    public record FireSpot(String fireClass, int order, int y, String title, String hint) {}
 
     /** A fire hazard players have to find in the hazard hunt. */
     public record Hazard(String title, String explanation) {}

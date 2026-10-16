@@ -2,6 +2,8 @@ package io.github.vxnsin.lna.plugin.mission;
 
 import io.github.vxnsin.lna.plugin.Keys;
 import io.github.vxnsin.lna.plugin.LnaPlugin;
+import io.github.vxnsin.lna.plugin.fire.FireExtinguishedEvent;
+import io.github.vxnsin.lna.plugin.fire.FireMistakeEvent;
 import io.github.vxnsin.lna.plugin.furniture.FurnitureInteractEvent;
 import io.github.vxnsin.lna.plugin.map.MapDefinition;
 import io.github.vxnsin.lna.plugin.map.PlacedMaps.PlacedMap;
@@ -70,6 +72,8 @@ public final class MissionService implements Listener {
         }
         MissionSession session = switch (info.type()) {
             case "hazard_hunt" -> new HazardHuntSession(this, info, players, map, placed.get(), plugin.furniture());
+            case "fire_training" -> new FireTrainingSession(this, info, players, map, placed.get(), plugin.fires(),
+                    plugin.items());
             default -> null;
         };
         if (session == null) {
@@ -137,6 +141,17 @@ public final class MissionService implements Listener {
     @EventHandler
     public void onFurnitureInteract(FurnitureInteractEvent event) {
         sessionOf(event.getPlayer()).ifPresent(session -> session.onInteract(event.getPlayer(), event.hitbox()));
+    }
+
+    @EventHandler
+    public void onFireExtinguished(FireExtinguishedEvent event) {
+        sessionOf(event.getPlayer()).ifPresent(session -> session.onFireExtinguished(event.getPlayer(), event.fire()));
+    }
+
+    @EventHandler
+    public void onFireMistake(FireMistakeEvent event) {
+        sessionOf(event.getPlayer()).ifPresent(session ->
+                session.onFireMistake(event.getPlayer(), event.fire(), event.mistake()));
     }
 
     @EventHandler

@@ -1,0 +1,61 @@
+# Break room kitchen with an extinguisher wall and a training hall (mission 4).
+# Map format: see hub.yml. Additional legend keys used here:
+#   fire: { class, order, y, title, hint }   fire spot started by the fire training mission, in order
+#   objects ... give: true                   clicking the object during the mission hands out that item
+
+name: "Pausenküche und Trainingshalle"
+height: 4
+floor: minecraft:smooth_stone
+ceiling: minecraft:white_concrete
+light: minecraft:sea_lantern
+light-spacing: 4
+
+legend:
+  "#": { wall: [minecraft:white_concrete] }
+  ".": {}
+  "S": { spawn: east }
+  "K": { block: minecraft:smooth_quartz }
+  "R": { objects: [ { id: fritteuse, facing: south } ] }
+  "k": { block: minecraft:smooth_quartz, objects: [ { id: topfdeckel, prop: true, facing: south, y: 2, give: true } ] }
+  "H":
+    objects: [ { id: herd, facing: south } ]
+    fire: { class: f, order: 1, y: 2, title: "Fettbrand am Herd", hint: "Herd aus, Deckel drauf (Topfdeckel nehmen und auf den Herd klicken) oder Fettbrandlöscher. Niemals Wasser!" }
+  "a":
+    block: minecraft:oak_planks
+    fire: { class: a, order: 2, y: 2, title: "Brennende Holzpalette", hint: "Feste Stoffe: Wasser-, Schaum-, ABC-Pulver- oder Fettbrandlöscher." }
+  "b":
+    fire: { class: b, order: 3, y: 1, title: "Brennende Lösungsmittel-Pfütze", hint: "Brennbare Flüssigkeiten: Schaum-, ABC-Pulver- oder CO₂-Löscher." }
+  "e":
+    objects: [ { id: heizluefter, facing: south } ]
+    fire: { class: elektro, order: 4, y: 2, title: "Brand am Heizlüfter", hint: "Elektrische Anlage: CO₂-Löscher, Abstand halten. Kein Wasser!" }
+  "d":
+    block: minecraft:iron_block
+    fire: { class: d, order: 5, y: 2, title: "Brennende Metallspäne", hint: "Metallbrände: nur Metallbrandlöscher (Brandklasse D), sanft aufbringen." }
+  # Extinguisher wall
+  "1": { objects: [ { id: feuerloescher_abc, prop: true, facing: north, give: true } ] }
+  "2": { objects: [ { id: feuerloescher_co2, prop: true, facing: north, give: true } ] }
+  "3": { objects: [ { id: feuerloescher_schaum, prop: true, facing: north, give: true } ] }
+  "4": { objects: [ { id: feuerloescher_wasser, prop: true, facing: north, give: true } ] }
+  "5": { objects: [ { id: feuerloescher_fett, prop: true, facing: north, give: true } ] }
+  "6": { objects: [ { id: feuerloescher_metall, prop: true, facing: north, give: true } ] }
+  "g": { objects: [ { id: loeschdecke, prop: true, facing: north, give: true } ] }
+  "i": { text: loescherwand }
+
+plan:
+  - "#################"
+  - "#KHKRk..#.......#"
+  - "#.......#..a....#"
+  - "#..S............#"
+  - "#.......#.....b.#"
+  - "#.......#.......#"
+  - "#.......#..e....#"
+  - "#...i...#.......#"
+  - "#.......#.....d.#"
+  - "#123456g#.......#"
+  - "#################"
+
+texts:
+  loescherwand: |-
+    <gold><bold>Löscherwand</bold></gold>
+    <white>Rechtsklick auf einen Löscher, um ihn zu nehmen.</white>
+    <gray>Die Brandklassen stehen auf dem Etikett (Maus darüber).</gray>

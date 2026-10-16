@@ -214,12 +214,21 @@ public final class FireService {
         nearbyPlayers(fire, 16).forEach(player -> player.sendActionBar(warning));
     }
 
+    /** Smothers a fire (pot lid or fire blanket): without oxygen it goes out completely, embers included. */
+    public void smother(Fire fire, Player player) {
+        extinguish(fire, player, "Sauerstoff weg – das Feuer ist erstickt!");
+    }
+
     private void extinguish(Fire fire, Player player) {
+        extinguish(fire, player, "Brand gelöscht!");
+    }
+
+    private void extinguish(Fire fire, Player player, String message) {
         Location center = fire.origin().getLocation().add(0.5, 0.3, 0.5);
         remove(fire);
         center.getWorld().spawnParticle(Particle.LARGE_SMOKE, center, 20, 0.5, 0.3, 0.5, 0.02);
         center.getWorld().playSound(center, Sound.BLOCK_FIRE_EXTINGUISH, 1f, 0.9f);
-        player.sendActionBar(Component.text("Brand gelöscht!", NamedTextColor.GREEN));
+        player.sendActionBar(Component.text(message, NamedTextColor.GREEN));
         Bukkit.getPluginManager().callEvent(new FireExtinguishedEvent(player, fire));
     }
 

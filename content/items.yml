@@ -35,6 +35,7 @@ feuerloescher_abc:
   name: "<red>ABC-Pulverlöscher</red>"
   lore:
     - "<gray>Brandklassen:</gray> <white>A</white> <dark_gray>fest</dark_gray> · <white>B</white> <dark_gray>flüssig</dark_gray> · <white>C</white> <dark_gray>Gase</dark_gray>"
+    - "<gray>Auch für elektrische Anlagen bis 1000 V (Abstand halten).</gray>"
     - ""
     - "<yellow>Rechtsklick halten</yellow> <gray>zum Löschen</gray>"
     - "<gray>Mit dem Wind löschen, stoßweise sprühen.</gray>"
@@ -49,7 +50,7 @@ feuerloescher_abc:
     range: 6
     agent: powder
     power: 5
-    fire_classes: [A, B, C]
+    fire_classes: [A, B, C, electric]
 
 feuerloescher_co2:
   base: minecraft:paper

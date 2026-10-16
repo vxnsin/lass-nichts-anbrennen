@@ -1,5 +1,7 @@
 package io.github.vxnsin.lna.plugin.mission;
 
+import io.github.vxnsin.lna.plugin.fire.Fire;
+import io.github.vxnsin.lna.plugin.fire.FireMistakeEvent.Mistake;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -82,6 +84,12 @@ public abstract class MissionSession {
 
     /** A player of this mission right-clicked a placed object. */
     protected void onInteract(Player player, Interaction hitbox) {}
+
+    /** A player of this mission completely extinguished a simulated fire. */
+    protected void onFireExtinguished(Player player, Fire fire) {}
+
+    /** A player of this mission handled a simulated fire wrongly. */
+    protected void onFireMistake(Player player, Fire fire, Mistake mistake) {}
 
     /** Called once when the mission ends, before game modes are restored. */
     protected void onFinish() {}

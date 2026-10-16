@@ -214,9 +214,11 @@ Der Builder macht:
 
 Aufwand grob: Builder 2–3 Abende, Plugin-Teil (Items + Möbel + PackServer) 3–4 Abende. Das gehört zum **Vertical Slice** im November, weil alle Missionen darauf aufbauen.
 
-> **Stand 15.10.2026:** Pack-Builder, PackServer, ItemRegistry und Glyphen/HUD sind umgesetzt und
-> getestet (Build + 5 Unit-Tests). Test-Item: ABC-Pulverlöscher mit Textur, Sprüh-Sound und
-> Füllstands-HUD. Der Test im Spiel steht noch aus.
+> **Stand 16.10.2026:** Umgesetzt sind Pack-Builder, Glyphen/HUD, 42 generierte 3D-Modelle, Feuerlöscher
+> mit Benutzt-Animation, Möbel-Platzierung, Feuer-Simulation mit Brandklassen, Map-Generator (Hub, Büro,
+> Küche), Lobby (Kampagnen-Menü, Missionstisch, Gruppen, vxnsin-Ecke) sowie **Mission 2** (Gefahren-Detektiv)
+> und **Mission 4** (Fettbrand und Löscher-Training). Build und Tests laufen, der Test im Spiel steht noch aus.
+> Offen: Missionen 1, 3 und 5, NPCs mit BetterModel, Custom-GUI-Hintergründe.
 
 ### HUD & Custom-GUIs (Glyphen)
 

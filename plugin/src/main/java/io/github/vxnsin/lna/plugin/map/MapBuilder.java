@@ -129,6 +129,9 @@ public final class MapBuilder {
                     Interaction hitbox = furniture.placeAt(item.get(), world.getBlockAt(wx, y0 + object.y(), wz),
                             object.facing(), placement);
                     tag(hitbox, map.id(), object.hazard(), object.safe());
+                    if (object.give()) {
+                        hitbox.getPersistentDataContainer().set(Keys.GIVE, PersistentDataType.STRING, object.id());
+                    }
                 }
                 if (cell.mission() != null) {
                     placeMissionCard(world, wx, y0, wz, cell.mission(), map.id(), warnings);

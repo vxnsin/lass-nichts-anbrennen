@@ -1,6 +1,7 @@
 package io.github.vxnsin.lna.plugin.map;
 
 import io.github.vxnsin.lna.plugin.map.MapDefinition.Cell;
+import io.github.vxnsin.lna.plugin.map.MapDefinition.FireSpot;
 import io.github.vxnsin.lna.plugin.map.MapDefinition.Hazard;
 import io.github.vxnsin.lna.plugin.map.MapDefinition.MapObject;
 import java.io.File;
@@ -140,7 +141,8 @@ public final class MapLoader {
                     Boolean.TRUE.equals(object.get("prop")),
                     object.containsKey("collision") ? Boolean.TRUE.equals(object.get("collision")) : null,
                     string(object, "hazard", null),
-                    string(object, "safe", null)));
+                    string(object, "safe", null),
+                    Boolean.TRUE.equals(object.get("give"))));
             check(objects.getLast().id() != null, where + ": object without id");
         }
         return new Cell(
@@ -157,7 +159,17 @@ public final class MapLoader {
                 string(entry, "safe", null),
                 string(entry, "mission", null),
                 string(entry, "npc", null),
+                entry.containsKey("fire") ? fireSpot(map(entry.get("fire"), where + " fire")) : null,
                 List.copyOf(objects));
+    }
+
+    private static FireSpot fireSpot(Map<String, Object> fire) {
+        return new FireSpot(
+                string(fire, "class", "a"),
+                ((Number) fire.getOrDefault("order", 1)).intValue(),
+                ((Number) fire.getOrDefault("y", 1)).intValue(),
+                string(fire, "title", "Brand"),
+                string(fire, "hint", ""));
     }
 
     private static void checkReferences(String key, String hazard, String safe, Map<String, Hazard> hazards,

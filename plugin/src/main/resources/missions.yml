@@ -33,10 +33,13 @@ akku_alarm:
 
 fettbrand:
   number: 4
-  title: "Fettbrand in der Pausenküche"
+  title: "Fettbrand und Löscher-Training"
   description: "Lösche einen Fettbrand richtig und wähle für jeden Brand den passenden Löscher."
+  map: kueche
   icon: topfdeckel
-  available: false
+  type: fire_training
+  duration: 420
+  available: true
 
 ernstfall:
   number: 5

@@ -20,8 +20,8 @@ Projektplan, Missionen und Quellen: [docs/PLAN.md](docs/PLAN.md)
 | Feuer-Simulation mit Brandklassen (Fettexplosion, Stromschlag, Wiederentzündung) | ✅ |
 | Map-Generator (ASCII-Grundrisse): Hub und Büro | ✅ |
 | Lobby: Kampagnen-Menü, Missionstisch, Gruppen, vxnsin-Ecke | ✅ |
-| Mission 2 „Gefahren-Detektiv“ | ✅ |
-| Missionen 1, 3, 4, 5 · NPCs mit Animation (BetterModel) | geplant |
+| Mission 2 „Gefahren-Detektiv“ · Mission 4 „Fettbrand und Löscher-Training“ | ✅ |
+| Missionen 1, 3, 5 · NPCs mit Animation (BetterModel) | geplant |
 
 Alles ab „Möbel“ ist bisher nur gebaut und per Test geprüft, **im Spiel noch nicht ausprobiert**.
 
@@ -59,9 +59,10 @@ ersten Start und man setzt in `plugin/run/eula.txt` selbst `eula=true`.
 
 Erster Test im Spiel (Server-Konsole: `op <Name>`):
 
-1. `/lna map build hub` → baut den Hub an deiner Position, danach `/lna map build buero` ein Stück daneben
+1. `/lna map build hub` → baut den Hub an deiner Position. Danach jeweils ein Stück daneben (mindestens
+   25 Blöcke Abstand) `/lna map build buero` und `/lna map build kueche`
 2. Rejoinen oder Menü-Item (Slot 5) benutzen → Kampagnen-Menü
-3. Am Missionstisch die Karte „Mission 2“ anklicken → **[Mission starten]**
+3. Am Missionstisch die Karte „Mission 2“ oder „Mission 4“ anklicken → **[Mission starten]**
 
 | Befehl | Wirkung |
 |---|---|

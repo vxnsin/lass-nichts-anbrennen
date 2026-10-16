@@ -32,6 +32,8 @@ public final class Keys {
     public static final NamespacedKey LOBBY_ITEM = new NamespacedKey(NAMESPACE, "lobby_item");
     /** Player name of a figure placed by a map (e.g. the project author in the hub). */
     public static final NamespacedKey NPC = new NamespacedKey(NAMESPACE, "npc");
+    /** Item id handed out when a player clicks this object during a mission (e.g. the extinguisher wall). */
+    public static final NamespacedKey GIVE = new NamespacedKey(NAMESPACE, "give");
     /** Mission id of a clickable mission board entry. */
     public static final NamespacedKey MISSION = new NamespacedKey(NAMESPACE, "mission");
 
