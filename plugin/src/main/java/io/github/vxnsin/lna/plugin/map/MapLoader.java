@@ -155,6 +155,8 @@ public final class MapLoader {
                 string(entry, "text", null),
                 string(entry, "hazard", null),
                 string(entry, "safe", null),
+                string(entry, "mission", null),
+                string(entry, "npc", null),
                 List.copyOf(objects));
     }
 

@@ -13,6 +13,7 @@ import io.github.vxnsin.lna.plugin.hud.Glyphs;
 import io.github.vxnsin.lna.plugin.hud.HudService;
 import io.github.vxnsin.lna.plugin.item.CraftingGuard;
 import io.github.vxnsin.lna.plugin.item.ItemRegistry;
+import io.github.vxnsin.lna.plugin.lobby.LobbyService;
 import io.github.vxnsin.lna.plugin.map.MapBuilder;
 import io.github.vxnsin.lna.plugin.map.MapDefinition;
 import io.github.vxnsin.lna.plugin.map.MapLoader;
@@ -99,7 +100,7 @@ public final class LnaPlugin extends JavaPlugin {
         maps = new MapLoader(getLogger()).load(getFile(), getDataFolder());
         placedMaps = new PlacedMaps(new File(getDataFolder(), "placed-maps.yml"));
         placedMaps.load();
-        mapBuilder = new MapBuilder(furniture, items, glyphs);
+        mapBuilder = new MapBuilder(furniture, items, glyphs, () -> missions.missions());
 
         parties = new PartyService();
         try (InputStream in = getResource("missions.yml")) {
@@ -109,7 +110,7 @@ public final class LnaPlugin extends JavaPlugin {
             missions = new MissionService(this, parties, Map.of());
         }
         missions.start();
-        registerListeners(missions);
+        registerListeners(missions, new LobbyService(this));
         LnaCommands.register(this);
 
         getLogger().info(String.format("Loaded %d items and %d glyphs. Resource pack %s served at %s",

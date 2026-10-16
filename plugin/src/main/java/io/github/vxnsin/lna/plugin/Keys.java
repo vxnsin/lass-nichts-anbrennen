@@ -30,6 +30,8 @@ public final class Keys {
     public static final NamespacedKey PASS = new NamespacedKey(NAMESPACE, "pass");
     /** Marks the lobby items a player receives in the hub. */
     public static final NamespacedKey LOBBY_ITEM = new NamespacedKey(NAMESPACE, "lobby_item");
+    /** Player name of a figure placed by a map (e.g. the project author in the hub). */
+    public static final NamespacedKey NPC = new NamespacedKey(NAMESPACE, "npc");
     /** Mission id of a clickable mission board entry. */
     public static final NamespacedKey MISSION = new NamespacedKey(NAMESPACE, "mission");
 

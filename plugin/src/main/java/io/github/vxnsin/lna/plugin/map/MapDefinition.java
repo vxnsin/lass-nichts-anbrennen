@@ -38,6 +38,8 @@ public record MapDefinition(
      * One legend entry. Fields that are not used by a character are null or empty.
      *
      * @param hazard / safe on a block cell: the block itself is clickable for missions
+     * @param mission mission card lying on the block of this cell (mission table)
+     * @param npc     player name whose skin a standing figure shows (e.g. the project author)
      */
     public record Cell(
             List<BlockData> wall,
@@ -51,6 +53,8 @@ public record MapDefinition(
             String text,
             String hazard,
             String safe,
+            String mission,
+            String npc,
             List<MapObject> objects) {
 
         public boolean isWall() {

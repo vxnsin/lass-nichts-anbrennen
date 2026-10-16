@@ -15,8 +15,15 @@ Projektplan, Missionen und Quellen: [docs/PLAN.md](docs/PLAN.md)
 | Pack-Auslieferung über eingebauten HTTP-Server | ✅ |
 | Glyphen-/HUD-System (`<glyph:…>`, `<shift:…>`, Bossbar-HUD) | ✅ |
 | Asset-Generator: 42 3D-Modelle (Löscher, Ausrüstung, Elektro, Gebäude, Küche, Schilder) | ✅ Platzhalter |
-| Feuerlöscher: Schlauch-Animation beim Benutzen, Sprühen ohne Verlangsamung, Füllstands-HUD | ✅ im Spiel ungetestet |
-| Möbel/Schilder platzieren, Missionen, Feuer-Simulation, Maps, NPCs (BetterModel) | geplant |
+| Feuerlöscher: Schlauch-Animation beim Benutzen, Sprühen ohne Verlangsamung, Füllstands-HUD | ✅ |
+| Möbel, Schilder und Deko platzieren (Display-Entities mit Hitbox) | ✅ |
+| Feuer-Simulation mit Brandklassen (Fettexplosion, Stromschlag, Wiederentzündung) | ✅ |
+| Map-Generator (ASCII-Grundrisse): Hub und Büro | ✅ |
+| Lobby: Kampagnen-Menü, Missionstisch, Gruppen, vxnsin-Ecke | ✅ |
+| Mission 2 „Gefahren-Detektiv“ | ✅ |
+| Missionen 1, 3, 4, 5 · NPCs mit Animation (BetterModel) | geplant |
+
+Alles ab „Möbel“ ist bisher nur gebaut und per Test geprüft, **im Spiel noch nicht ausprobiert**.
 
 ## Voraussetzungen
 
@@ -36,25 +43,39 @@ Ergebnis:
 
 Unter Windows `gradlew.bat` statt `./gradlew` verwenden.
 
-## Testserver starten
+## Dev-Server starten
 
 ```bash
-./gradlew :plugin:runServer
+./gradlew dev
 ```
 
-Startet einen Paper-26.3-Server in `plugin/run/` mit dem Plugin. Beim ersten Start muss die
-[Minecraft-EULA](https://aka.ms/MinecraftEULA) gelesen und in `plugin/run/eula.txt` selbst akzeptiert werden.
+Startet Paper 26.3 in `plugin/run/` mit diesem Plugin, **WorldEdit** und **BetterModel**. Alles wird automatisch
+heruntergeladen. Beim ersten Start werden Entwickler-Einstellungen geschrieben (Kreativmodus, flache Welt,
+friedlich, keine Whitelist).
 
-Im Spiel (als OP):
+**Minecraft-EULA:** Bitte die [EULA](https://aka.ms/MinecraftEULA) lesen. Wer zustimmt, trägt einmalig
+`lna.acceptMinecraftEula=true` in `~/.gradle/gradle.properties` ein. Ohne den Eintrag stoppt der Server beim
+ersten Start und man setzt in `plugin/run/eula.txt` selbst `eula=true`.
+
+Erster Test im Spiel (Server-Konsole: `op <Name>`):
+
+1. `/lna map build hub` → baut den Hub an deiner Position, danach `/lna map build buero` ein Stück daneben
+2. Rejoinen oder Menü-Item (Slot 5) benutzen → Kampagnen-Menü
+3. Am Missionstisch die Karte „Mission 2“ anklicken → **[Mission starten]**
 
 | Befehl | Wirkung |
 |---|---|
-| `/lna give feuerloescher_abc` | Feuerlöscher geben, Rechtsklick gedrückt halten: Schlauch ziehen, zielen, sprühen |
-| `/lna refill` | Feuerlöscher in der Hand auffüllen |
-| `/lna items` | Alle eigenen Items auflisten |
-| `/lna pack` | Resource Pack erneut laden |
-| `/lna reloadpack` | Neu gebautes Pack an alle senden (siehe unten) |
-| `/credits` | Alle Quellen und Lizenzen anzeigen |
+| `/mission` · `/mission start <id>` · `/mission stop` | Missionen anzeigen, starten (für die ganze Gruppe), abbrechen |
+| `/gruppe` · `/gruppe einladen <Name>` · `/gruppe annehmen` · `/gruppe verlassen` | Gruppen für Mehrspieler |
+| `/lna map list` · `/lna map build <map>` · `/lna map tp <map>` | Maps aus `plugin/src/main/resources/maps/` bauen |
+| `/lna fire start <a\|b\|c\|d\|f\|elektro> [stärke]` · `/lna fire list` · `/lna fire clear` | Testbrand am angeschauten Block |
+| `/lna give <item>` · `/lna items` · `/lna refill` | Eigene Items, Feuerlöscher auffüllen |
+| `/lna pack` · `/lna reloadpack` | Resource Pack neu laden bzw. neu gebautes Pack an alle senden |
+| `/credits` | Alle Quellen und Lizenzen |
+
+Bauen im Spiel (Berechtigung `lna.build`): Möbel oder Schild in die Hand und **Rechtsklick** auf Boden, Wand oder
+Decke. Andere eigene Items stellt man mit **Shift + Rechtsklick** als Deko ab. **Shift + Linksklick** entfernt
+ein Objekt. Stehen Objekte verkehrt herum, in der Config `furniture.rotation-offset: 180` setzen.
 
 Schneller Testkreislauf für Texturen und Sounds, ohne Server-Neustart:
 

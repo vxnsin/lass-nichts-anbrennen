@@ -27,17 +27,21 @@ class MapFilesTest {
     private static final Path MAPS = Path.of("src/main/resources/maps");
     private static final Path ITEMS = Path.of("../content/items.yml");
 
+    private static final Path MISSIONS = Path.of("src/main/resources/missions.yml");
+
     @TestFactory
     Stream<DynamicTest> mapsAreConsistent() throws IOException {
         Map<String, Object> items = load(ITEMS);
+        Map<String, Object> missions = load(MISSIONS);
         try (Stream<Path> files = Files.list(MAPS)) {
             return files.filter(file -> file.toString().endsWith(".yml")).sorted().toList().stream()
-                    .map(file -> DynamicTest.dynamicTest(file.getFileName().toString(), () -> check(load(file), items)));
+                    .map(file -> DynamicTest.dynamicTest(file.getFileName().toString(),
+                            () -> check(load(file), items, missions)));
         }
     }
 
     @SuppressWarnings("unchecked")
-    private static void check(Map<String, Object> map, Map<String, Object> items) {
+    private static void check(Map<String, Object> map, Map<String, Object> items, Map<String, Object> missions) {
         Map<String, Object> legend = (Map<String, Object>) map.get("legend");
         Map<String, Object> texts = (Map<String, Object>) map.getOrDefault("texts", Map.of());
         Map<String, Object> hazards = (Map<String, Object>) map.getOrDefault("hazards", Map.of());
@@ -66,6 +70,9 @@ class MapFilesTest {
                 assertTrue(texts.containsKey(cell.get("text")), where + ": unknown text " + cell.get("text"));
             }
             checkReference(where, cell, hazards, safe);
+            if (cell.containsKey("mission")) {
+                assertTrue(missions.containsKey(cell.get("mission")), where + ": unknown mission " + cell.get("mission"));
+            }
             for (Object element : (List<Object>) cell.getOrDefault("objects", List.of())) {
                 Map<String, Object> object = (Map<String, Object>) element;
                 assertTrue(items.containsKey(object.get("id")), where + ": unknown item " + object.get("id"));

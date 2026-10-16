@@ -9,9 +9,15 @@ import io.github.vxnsin.lna.plugin.item.ItemRegistry;
 import io.github.vxnsin.lna.plugin.map.MapDefinition.Cell;
 import io.github.vxnsin.lna.plugin.map.MapDefinition.MapObject;
 import io.github.vxnsin.lna.plugin.map.PlacedMaps.PlacedMap;
+import io.github.vxnsin.lna.plugin.mission.MissionInfo;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -25,9 +31,14 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Mannequin;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
+import org.bukkit.util.Transformation;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 
 /**
  * Builds a {@link MapDefinition} into the world. The north-west corner of the plan is placed at the given
@@ -40,11 +51,14 @@ public final class MapBuilder {
     private final FurnitureService furniture;
     private final ItemRegistry items;
     private final Glyphs glyphs;
+    private final Supplier<Map<String, MissionInfo>> missions;
 
-    public MapBuilder(FurnitureService furniture, ItemRegistry items, Glyphs glyphs) {
+    public MapBuilder(FurnitureService furniture, ItemRegistry items, Glyphs glyphs,
+                      Supplier<Map<String, MissionInfo>> missions) {
         this.furniture = furniture;
         this.items = items;
         this.glyphs = glyphs;
+        this.missions = missions;
     }
 
     public Result build(MapDefinition map, Location feet) {
@@ -116,8 +130,16 @@ public final class MapBuilder {
                             object.facing(), placement);
                     tag(hitbox, map.id(), object.hazard(), object.safe());
                 }
+                if (cell.mission() != null) {
+                    placeMissionCard(world, wx, y0, wz, cell.mission(), map.id(), warnings);
+                }
+                if (cell.npc() != null) {
+                    spawnFigure(new Location(world, wx + 0.5, y0 + 1, wz + 0.5, yaw(cell.doorFacing()), 0),
+                            cell.npc(), map.id());
+                }
                 if (cell.text() != null) {
-                    spawnText(new Location(world, wx + 0.5, y0 + 2.2, wz + 0.5), map.texts().get(cell.text()), map.id());
+                    double height = cell.npc() != null ? 3.1 : 2.2;
+                    spawnText(new Location(world, wx + 0.5, y0 + height, wz + 0.5), map.texts().get(cell.text()), map.id());
                 }
                 if (cell.spawn() != null) {
                     spawn = new Location(world, wx + 0.5, y0 + 1, wz + 0.5, yaw(cell.spawn()), 0);
@@ -159,6 +181,58 @@ public final class MapBuilder {
         if (safe != null) {
             data.set(Keys.SAFE, PersistentDataType.STRING, safe);
         }
+    }
+
+    /** A mission card lying on the table block of this cell: flat icon, floating title and a click box. */
+    private void placeMissionCard(World world, int x, int y0, int z, String missionId, String mapId, List<String> warnings) {
+        MissionInfo info = missions.get().get(missionId);
+        if (info == null) {
+            warnings.add("Unbekannte Mission '" + missionId + "'");
+            return;
+        }
+        items.get(info.icon()).ifPresent(icon -> world.spawn(new Location(world, x + 0.5, y0 + 2.15, z + 0.5),
+                ItemDisplay.class, display -> {
+                    display.setItemStack(items.create(icon));
+                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.NONE);
+                    display.setTransformation(new Transformation(new Vector3f(),
+                            new AxisAngle4f((float) Math.toRadians(-90), 1, 0, 0), new Vector3f(0.55f, 0.55f, 0.55f),
+                            new AxisAngle4f()));
+                    display.setPersistent(true);
+                    display.getPersistentDataContainer().set(Keys.MAP, PersistentDataType.STRING, mapId);
+                }));
+        String title = info.available()
+                ? "<gold>Mission " + info.number() + "</gold>\n<white>" + info.title() + "</white>"
+                : "<dark_gray>Mission " + info.number() + "</dark_gray>\n<gray>" + info.title() + "</gray>\n<dark_gray>bald verfügbar</dark_gray>";
+        world.spawn(new Location(world, x + 0.5, y0 + 2.45, z + 0.5), TextDisplay.class, display -> {
+            display.text(MiniMessage.miniMessage().deserialize(title));
+            display.setBillboard(Display.Billboard.VERTICAL);
+            display.setAlignment(TextDisplay.TextAlignment.CENTER);
+            display.setBackgroundColor(Color.fromARGB(90, 0, 0, 0));
+            display.setTransformation(new Transformation(new Vector3f(), new AxisAngle4f(),
+                    new Vector3f(0.6f, 0.6f, 0.6f), new AxisAngle4f()));
+            display.setPersistent(true);
+            display.getPersistentDataContainer().set(Keys.MAP, PersistentDataType.STRING, mapId);
+        });
+        Interaction hitbox = furniture.placeMarker(world.getBlockAt(x, y0 + 1, z));
+        hitbox.getPersistentDataContainer().set(Keys.MAP, PersistentDataType.STRING, mapId);
+        hitbox.getPersistentDataContainer().set(Keys.MISSION, PersistentDataType.STRING, missionId);
+    }
+
+    /** A standing player figure with the skin of the given player name (e.g. the project author). */
+    private static void spawnFigure(Location location, String name, String mapId) {
+        location.getWorld().spawn(location, Mannequin.class, figure -> {
+            figure.setProfile(ResolvableProfile.resolvableProfile().name(name).build());
+            figure.setImmovable(true);
+            figure.setInvulnerable(true);
+            figure.setSilent(true);
+            figure.setPersistent(true);
+            figure.setRemoveWhenFarAway(false);
+            figure.customName(Component.text(name, NamedTextColor.GOLD));
+            figure.setCustomNameVisible(true);
+            figure.setDescription(Component.text("Idee, Konzept & Code", NamedTextColor.GRAY));
+            figure.getPersistentDataContainer().set(Keys.MAP, PersistentDataType.STRING, mapId);
+            figure.getPersistentDataContainer().set(Keys.NPC, PersistentDataType.STRING, name);
+        });
     }
 
     private void spawnText(Location location, String text, String mapId) {

@@ -44,15 +44,23 @@ legend:
   "N": { objects: [ { id: schild_notausgang, facing: north, y: 3 } ] }
   "R": { objects: [ { id: druckknopfmelder, facing: west, y: 2 }, { id: schild_brandmelder, facing: west, y: 3 } ] }
   "P": { floor: minecraft:grass_block, roof: false, pillar: [minecraft:spruce_log, minecraft:spruce_log] }
+  # Mission table: one card per mission lying on the table
+  "1": { block: "minecraft:spruce_slab[type=top]", mission: branddreieck }
+  "2": { block: "minecraft:spruce_slab[type=top]", mission: gefahrensuche }
+  "3": { block: "minecraft:spruce_slab[type=top]", mission: akku_alarm }
+  "4": { block: "minecraft:spruce_slab[type=top]", mission: fettbrand }
+  "5": { block: "minecraft:spruce_slab[type=top]", mission: ernstfall }
+  # Project author corner
+  "V": { npc: vxnsin, facing: west, text: about }
   "A": { floor: minecraft:dirt_path, roof: false, objects: [ { id: schild_sammelstelle, facing: north, y: 2 } ] }
 
 plan:
   - "##WWW#KKKKK#WWW##"
   - "#F.....i.......E#"
-  - "#.............m.#"
+  - "#....12345....m.#"
   - "#..TT..TT..TT...#"
   - "#..cc..cc..cc...#"
-  - "#.......S.......#"
+  - "#.......S......V#"
   - "#..TT..TT..TT...#"
   - "#..cc..cc..cc...#"
   - "#H......N......R#"
@@ -70,6 +78,16 @@ texts:
     <gray>Finde den Flucht- und Rettungsplan, den Feuerlöscher,</gray>
     <gray>den Druckknopfmelder und draußen die Sammelstelle.</gray>
   missionen: |-
-    <gold><bold>Missionen</bold></gold>
-    <white>Mission 2: Gefahren-Detektiv</white>
-    <gray>/lna mission start gefahrensuche</gray>
+    <gold><bold>Missionstisch</bold></gold>
+    <white>Klicke eine Karte an, um eine Mission zu starten.</white>
+    <gray>Mit Freunden spielen: /gruppe einladen <Name></gray>
+  # Placeholders: write these texts about yourself and the project.
+  about: |-
+    <gold><bold>vxnsin</bold></gold>
+    <white>Idee, Konzept und Code</white>
+    <gray>Rechtsklick für mehr</gray>
+  about_chat: |-
+    <gold><bold>Über das Projekt</bold></gold>
+    <white>„Lass nichts anbrennen“ ist ein Minecraft-Spielmodus zum Brandschutz, entstanden als Beitrag
+    zum Wettbewerb „Jugend will sich-er-leben“ 2026/27.</white>
+    <gray>Idee, Konzept und Code: vxnsin. (Platzhalter – diesen Text in maps/hub.yml anpassen.)</gray>

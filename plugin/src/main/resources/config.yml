@@ -10,6 +10,10 @@ world-rules:
   # Fixed time of day when the daylight cycle is off (6000 = noon).
   time: 6000
 
+lobby:
+  # Teleport joining players to the hub (once the hub map is built with /lna map build hub).
+  teleport-on-join: true
+
 furniture:
   # Extra rotation in degrees for all placed models. Set to 180 if placed objects face the wrong way.
   rotation-offset: 0
