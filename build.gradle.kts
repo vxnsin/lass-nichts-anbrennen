@@ -1,3 +1,9 @@
+tasks.register("dev") {
+    group = "lna"
+    description = "Starts the development server with this plugin, WorldEdit and BetterModel"
+    dependsOn(":plugin:runServer")
+}
+
 subprojects {
     group = "io.github.vxnsin.lna"
     version = "0.1.0-SNAPSHOT"
