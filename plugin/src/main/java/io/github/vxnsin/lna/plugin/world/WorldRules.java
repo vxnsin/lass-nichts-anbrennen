@@ -50,8 +50,13 @@ public final class WorldRules implements Listener {
         }
         boolean daylight = config.getBoolean("daylight-cycle", false);
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, daylight);
-        if (!daylight) {
-            world.setTime(config.getLong("time", 6000L));
+        // Since 26.x only dimensions with a world clock (the overworld) have a time of day.
+        if (!daylight && world.getEnvironment() == World.Environment.NORMAL) {
+            try {
+                world.setTime(config.getLong("time", 6000L));
+            } catch (IllegalArgumentException noWorldClock) {
+                // Custom dimension without a clock: nothing to set.
+            }
         }
     }
 }

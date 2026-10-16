@@ -63,6 +63,7 @@ val prepareDevServer = tasks.register("prepareDevServer") {
             |spawn-monsters=false
             |spawn-protection=0
             |level-type=minecraft\:flat
+            |generator-settings={"layers"\:[{"block"\:"minecraft\:bedrock","height"\:1},{"block"\:"minecraft\:dirt","height"\:2},{"block"\:"minecraft\:grass_block","height"\:1}],"biome"\:"minecraft\:plains"}
             |generate-structures=false
             |allow-flight=true
             |white-list=false
