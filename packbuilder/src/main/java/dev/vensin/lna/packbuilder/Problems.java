@@ -1,9 +1,8 @@
-package io.github.vxnsin.lna.packbuilder;
+package dev.vensin.lna.packbuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/** Collects errors and warnings so that all problems are reported in a single run. */
 public final class Problems {
 
     private final List<String> errors = new ArrayList<>();

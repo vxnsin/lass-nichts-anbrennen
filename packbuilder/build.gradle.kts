@@ -11,16 +11,14 @@ tasks.test {
     useJUnitPlatform()
 }
 
-// Builds the resource pack from content/ and validates CREDITS.md. Output: build/pack/
 val buildPack = tasks.register<JavaExec>("buildPack") {
     group = "lna"
     description = "Builds the resource pack from content/ and validates CREDITS.md"
 
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass.set("io.github.vxnsin.lna.packbuilder.Main")
+    mainClass.set("dev.vensin.lna.packbuilder.Main")
     jvmArgs("-Dstdout.encoding=UTF-8", "-Dstderr.encoding=UTF-8")
 
-    // Local values only: the argument provider is serialized into the configuration cache.
     val contentDir = rootProject.layout.projectDirectory.dir("content")
     val creditsFile = rootProject.layout.projectDirectory.file("CREDITS.md")
     val packFormat = providers.gradleProperty("resourcePackFormat")

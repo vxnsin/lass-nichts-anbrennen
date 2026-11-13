@@ -1,4 +1,4 @@
-package io.github.vxnsin.lna.packbuilder;
+package dev.vensin.lna.packbuilder;
 
 import java.nio.file.Path;
 import java.util.HashMap;

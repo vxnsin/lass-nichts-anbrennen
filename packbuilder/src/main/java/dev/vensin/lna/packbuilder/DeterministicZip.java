@@ -1,4 +1,4 @@
-package io.github.vxnsin.lna.packbuilder;
+package dev.vensin.lna.packbuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,10 +8,7 @@ import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-/**
- * Writes reproducible ZIP archives (sorted entries, fixed timestamps). The pack hash therefore
- * only changes when the content changes, so clients do not re-download an identical pack.
- */
+/** Sorted entries and fixed timestamps, so the pack hash only changes with the content and clients skip identical packs. */
 final class DeterministicZip {
 
     private static final LocalDateTime FIXED_TIME = LocalDateTime.of(2026, 1, 1, 0, 0);

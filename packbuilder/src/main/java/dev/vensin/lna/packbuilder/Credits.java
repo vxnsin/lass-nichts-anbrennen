@@ -1,4 +1,4 @@
-package io.github.vxnsin.lna.packbuilder;
+package dev.vensin.lna.packbuilder;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,16 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * Parses the asset attribution table in CREDITS.md.
- *
- * <p>Expected format (Markdown table, paths relative to {@code content/}):
- * <pre>
- * | Datei | Titel | Urheber*in | Quelle | Lizenz | Änderungen |
- * |---|---|---|---|---|---|
- * | textures/item/beispiel.png | Beispiel | Klasse WEC10A | eigenes Werk | CC BY 4.0 | – |
- * </pre>
- */
+/** Expects a Markdown table (Datei | Titel | Urheber*in | Quelle | Lizenz | Änderungen) with paths relative to content/. */
 public final class Credits {
 
     public record Entry(String file, String title, String author, String source, String license, String changes) {}

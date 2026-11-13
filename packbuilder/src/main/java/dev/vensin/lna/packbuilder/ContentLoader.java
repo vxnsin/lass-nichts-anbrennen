@@ -1,9 +1,9 @@
-package io.github.vxnsin.lna.packbuilder;
+package dev.vensin.lna.packbuilder;
 
-import io.github.vxnsin.lna.packbuilder.Content.GlyphDef;
-import io.github.vxnsin.lna.packbuilder.Content.ItemDef;
-import io.github.vxnsin.lna.packbuilder.Content.SoundDef;
-import io.github.vxnsin.lna.packbuilder.Content.UseModel;
+import dev.vensin.lna.packbuilder.Content.GlyphDef;
+import dev.vensin.lna.packbuilder.Content.ItemDef;
+import dev.vensin.lna.packbuilder.Content.SoundDef;
+import dev.vensin.lna.packbuilder.Content.UseModel;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -19,7 +19,6 @@ import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
-/** Loads and validates items.yml, sounds.yml and glyphs.yml. */
 public final class ContentLoader {
 
     static final Pattern ITEM_ID = Pattern.compile("[a-z0-9_]+");

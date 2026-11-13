@@ -1,13 +1,13 @@
-package io.github.vxnsin.lna.packbuilder;
+package dev.vensin.lna.packbuilder;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import io.github.vxnsin.lna.packbuilder.Content.GlyphDef;
-import io.github.vxnsin.lna.packbuilder.Content.ItemDef;
-import io.github.vxnsin.lna.packbuilder.Content.SoundDef;
-import io.github.vxnsin.lna.packbuilder.Content.UseModel;
+import dev.vensin.lna.packbuilder.Content.GlyphDef;
+import dev.vensin.lna.packbuilder.Content.ItemDef;
+import dev.vensin.lna.packbuilder.Content.SoundDef;
+import dev.vensin.lna.packbuilder.Content.UseModel;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,24 +16,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 
-/**
- * Builds the resource pack from content/.
- *
- * <p>Writes to {@code outDir}: pack.zip, pack.sha1, registry.json (consumed by the plugin) and credits.json.
- */
 public final class PackBuilder {
 
-    /** Resource namespace, short for "Lass nichts anbrennen". */
     public static final String NAMESPACE = "lna";
-    /** Font that holds all glyphs and spacing characters. */
     public static final String HUD_FONT = NAMESPACE + ":hud";
     /** First glyph code point (Unicode Private Use Area). */
     static final int GLYPH_START = 0xE000;
@@ -41,10 +37,8 @@ public final class PackBuilder {
     static final int NEGATIVE_SPACE_START = 0xF800;
     static final int POSITIVE_SPACE_START = 0xF820;
     static final int SPACE_POWERS = 11; // 1 to 1024 pixels
-    /** Built-in sound event without any sound files ({@code lna:silent}). */
     public static final String SILENT_SOUND = "silent";
 
-    /** Asset directories in content/ that are copied into the pack (under assets/lna/). */
     private static final List<String> PACK_DIRS = List.of("textures", "models", "sounds");
     /** Asset directories that are validated but not packed (e.g. BetterModel sources). */
     private static final List<String> SOURCE_ONLY_DIRS = List.of("entities");
@@ -81,6 +75,7 @@ public final class PackBuilder {
         registry.add("sounds", writeSounds(content, pack, problems));
         writeGlyphs(content, images, pack, registry, problems);
         hideWhiteBossBar(pack);
+        registerTextureDirectories(images.keySet(), pack);
         pack.put("pack.mcmeta", json(packMeta()));
 
         if (problems.hasErrors()) {
@@ -98,7 +93,6 @@ public final class PackBuilder {
                 files, zip.length, sha1);
     }
 
-    /** Copies textures, models and sounds into the pack and validates each file, including its credits entry. */
     private int collectAssets(Credits credits, SortedMap<String, byte[]> pack, Map<String, BufferedImage> images,
                               Problems problems) throws IOException {
         int count = 0;
@@ -222,10 +216,7 @@ public final class PackBuilder {
         return items;
     }
 
-    /**
-     * Item model definition. With use_models, the client shows the default model normally and switches
-     * by use duration (ticks) while the item is being used, like the vanilla bow.
-     */
+    /** With use_models the client switches models by use duration (ticks) while the item is used, like the vanilla bow. */
     private JsonObject itemModel(ItemDef item, String modelRef, Problems problems) {
         JsonObject idle = modelReference(modelRef);
         if (item.useModels().isEmpty()) {
@@ -310,10 +301,6 @@ public final class PackBuilder {
         return keys;
     }
 
-    /**
-     * Generates the {@code lna:hud} font: one bitmap character per glyph plus spacing characters
-     * that the plugin uses to position glyphs with pixel precision (HUDs, GUI backgrounds).
-     */
     private void writeGlyphs(Content content, Map<String, BufferedImage> images, SortedMap<String, byte[]> pack,
                              JsonObject registry, Problems problems) {
         JsonArray providers = new JsonArray();
@@ -370,15 +357,38 @@ public final class PackBuilder {
         registry.add("spaces", spaces);
     }
 
-    /**
-     * Makes the white boss bar invisible so the plugin can use it as a HUD line where only the
-     * title (glyphs) is rendered. Boss bars in other colors keep their vanilla look.
-     */
+    /** Only the white boss bar turns invisible (the plugin's HUD line); other colors keep their vanilla look. */
     private void hideWhiteBossBar(SortedMap<String, byte[]> pack) throws IOException {
         byte[] transparent = transparentPng(182, 5);
         String dir = "assets/minecraft/textures/gui/sprites/boss_bar/";
         pack.put(dir + "white_background.png", transparent);
         pack.put(dir + "white_progress.png", transparent);
+    }
+
+    /** Vanilla only stitches textures/block and textures/item, so every other model texture directory goes into both atlases. */
+    private static void registerTextureDirectories(Collection<String> texturePaths, SortedMap<String, byte[]> pack) {
+        Set<String> directories = new TreeSet<>();
+        for (String path : texturePaths) {
+            String[] parts = path.split("/");
+            if (parts.length > 2 && !Set.of("block", "item", "hud").contains(parts[1])) {
+                directories.add(parts[1]);
+            }
+        }
+        if (directories.isEmpty()) {
+            return;
+        }
+        JsonArray sources = new JsonArray();
+        for (String directory : directories) {
+            JsonObject source = new JsonObject();
+            source.addProperty("type", "minecraft:directory");
+            source.addProperty("source", directory);
+            source.addProperty("prefix", directory + "/");
+            sources.add(source);
+        }
+        JsonObject atlas = new JsonObject();
+        atlas.add("sources", sources);
+        pack.put("assets/minecraft/atlases/blocks.json", json(atlas));
+        pack.put("assets/minecraft/atlases/items.json", json(atlas));
     }
 
     private JsonObject packMeta() {

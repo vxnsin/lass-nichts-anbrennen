@@ -1,4 +1,4 @@
-package io.github.vxnsin.lna.packbuilder;
+package dev.vensin.lna.packbuilder;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 
-/** Validates individual asset files before they are added to the pack. */
 final class AssetChecks {
 
     private AssetChecks() {}
 
-    /** Decodes a PNG and checks its dimensions. Returns {@code null} if the file is not a valid image. */
+    /** Returns {@code null} if the file is not a valid image. */
     static BufferedImage png(String path, byte[] data, Problems problems) {
         BufferedImage image;
         try {
@@ -37,7 +36,6 @@ final class AssetChecks {
         return image;
     }
 
-    /** Verifies that the file is Ogg Vorbis and warns about non-mono audio. */
     static void ogg(String path, byte[] data, Problems problems) {
         if (data.length < 64 || !new String(data, 0, 4, StandardCharsets.US_ASCII).equals("OggS")) {
             problems.error(path + ": Keine Ogg-Datei. Minecraft braucht .ogg (Vorbis), z. B. mit Audacity exportieren.");
@@ -55,7 +53,6 @@ final class AssetChecks {
         }
     }
 
-    /** Returns all texture references ("textures": {...}) of an item or block model. */
     static List<String> modelTextureRefs(String path, byte[] data, Problems problems) {
         List<String> refs = new ArrayList<>();
         JsonObject root;
@@ -77,10 +74,7 @@ final class AssetChecks {
         return refs;
     }
 
-    /**
-     * Horizontal advance of a bitmap glyph, computed the same way as the client: rightmost
-     * non-transparent column, scaled to the display height, plus one pixel of spacing.
-     */
+    /** Computed like the client: rightmost non-transparent column, scaled to the display height, plus one pixel of spacing. */
     static int glyphAdvance(BufferedImage image, int displayHeight) {
         int actualWidth = 0;
         for (int x = image.getWidth() - 1; x >= 0 && actualWidth == 0; x--) {
