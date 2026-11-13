@@ -1,148 +1,163 @@
-# Lass nichts anbrennen – Minecraft-Kampagne zum Brandschutz
+<p align="center">
+  <img src="docs/assets/wordmark.svg" alt="Lass nichts anbrennen" width="420">
+</p>
 
-Ein Minecraft-Spielmodus (Paper-Server, Einzel- und Mehrspieler), in dem Azubis Brandgefahren erkennen,
-Brände richtig bekämpfen und im Ernstfall alle sicher zum Sammelplatz bringen. Entstanden als Beitrag
-der Klasse WEC10A (E-Commerce-Kaufleute) zum Kreativwettbewerb **„Jugend will sich-er-leben“ 2026/27**
-mit dem Jahresthema *Brandschutz in Ausbildung und Beruf*.
+<p align="center">
+  Eine Minecraft-Kampagne, in der man Brandschutz nicht liest, sondern spielt.
+</p>
 
-Projektplan, Missionen und Quellen: [docs/PLAN.md](docs/PLAN.md)
+---
 
-## Stand
+Du fängst als Azubi bei der erfundenen BrandNeu Versand GmbH an und lernst in Missionen, wie Brände entstehen,
+wo im Büro die Gefahren stecken und welcher Löscher zu welchem Brand gehört. Wer falsch handelt, sieht die
+Folge und bekommt erklärt, warum. Bestraft wird niemand.
 
-| Baustein | Status |
-|---|---|
-| Eigener Resource-Pack-Builder (Items, Sounds, Glyphen, Benutzt-Modelle, CREDITS-Prüfung) | ✅ |
-| Pack-Auslieferung über eingebauten HTTP-Server | ✅ |
-| Glyphen-/HUD-System (`<glyph:…>`, `<shift:…>`, Bossbar-HUD) | ✅ |
-| Asset-Generator: 42 3D-Modelle (Löscher, Ausrüstung, Elektro, Gebäude, Küche, Schilder) | ✅ Platzhalter |
-| Feuerlöscher: Schlauch-Animation beim Benutzen, Sprühen ohne Verlangsamung, Füllstands-HUD | ✅ |
-| Möbel, Schilder und Deko platzieren (Display-Entities mit Hitbox) | ✅ |
-| Feuer-Simulation mit Brandklassen (Fettexplosion, Stromschlag, Wiederentzündung) | ✅ |
-| Map-Generator (ASCII-Grundrisse): Hub und Büro | ✅ |
-| Lobby: Kampagnen-Menü, Missionstisch, Gruppen, vxnsin-Ecke | ✅ |
-| Mission 1 „Das Branddreieck“ (mit Quiz) · Mission 2 „Gefahren-Detektiv“ · Mission 4 „Fettbrand und Löscher-Training“ | ✅ |
-| Missionen 3, 5 · NPCs mit Animation (BetterModel) | geplant |
+Das Projekt ist der Beitrag der Klasse WEC10A (Kaufleute im E-Commerce) zum Kreativwettbewerb
+„Jugend will sich-er-leben“ 2026/27 mit dem Jahresthema *Brandschutz in Ausbildung und Beruf*.
 
-Alles ab „Möbel“ ist bisher nur gebaut und per Test geprüft, **im Spiel noch nicht ausprobiert**.
+## Missionen
 
-## Voraussetzungen
+| Mission | Ort | Worum es geht |
+|---|---|---|
+| Das Branddreieck | Labor | Drei Brände löschen, indem man jeweils eine Seite des Branddreiecks entfernt, danach ein Quiz |
+| Gefahren-Detektiv | Büro | Zehn versteckte Brandgefahren finden, bevor die Zeit abläuft |
+| Fettbrand und Löscher-Training | Küche | Einen Fettbrand richtig löschen und für jeden Brand den passenden Löscher wählen |
 
-- **JDK 25** (z. B. [Eclipse Temurin](https://adoptium.net/)). Gradle lädt sich selbst über den Wrapper.
-- Zum Spielen: **Minecraft Java Edition 26.3**
+Jede bestandene Mission bringt einen Stempel im Brandschutz-Pass. Die Geschichte und die Lernziele stehen in
+[docs/konzept.md](docs/konzept.md).
 
-## Bauen
+## Loslegen
 
-```bash
-./gradlew build
-```
-
-Ergebnis:
-
-- `plugin/build/libs/LassNichtsAnbrennen-<version>.jar`: Plugin, enthält das Resource Pack
-- `packbuilder/build/pack/pack.zip`: das Resource Pack einzeln
-
-Unter Windows `gradlew.bat` statt `./gradlew` verwenden.
-
-## Dev-Server starten
+Du brauchst ein **JDK 25** (zum Beispiel [Temurin](https://adoptium.net/)) und zum Spielen
+**Minecraft Java Edition 26.2**.
 
 ```bash
+git clone https://github.com/vxnsin/lass-nichts-anbrennen
+cd lass-nichts-anbrennen
 ./gradlew dev
 ```
 
-Startet Paper 26.3 in `plugin/run/` mit diesem Plugin, **WorldEdit** und **BetterModel**. Alles wird automatisch
-heruntergeladen. Beim ersten Start werden Entwickler-Einstellungen geschrieben (Kreativmodus, flache Welt,
-friedlich, keine Whitelist).
+Unter Windows heißt der Befehl `gradlew.bat dev`. Er baut den Server samt Resource Pack und startet ihn in
+`server/run/`. Die Welt mit allen Maps entsteht bei jedem Start von selbst, einzurichten gibt es nichts.
+Danach in Minecraft mit `localhost` verbinden: Du stehst im Hub vor dem Missionstisch.
 
-**Minecraft-EULA:** Bitte die [EULA](https://aka.ms/MinecraftEULA) lesen. Wer zustimmt, trägt einmalig
-`lna.acceptMinecraftEula=true` in `~/.gradle/gradle.properties` ein. Ohne den Eintrag stoppt der Server beim
-ersten Start und man setzt in `plugin/run/eula.txt` selbst `eula=true`.
+### Als fertige Datei
 
-Erster Test im Spiel (Server-Konsole: `op <Name>`):
+```bash
+./gradlew :server:jar
+```
 
-1. `/lna map build hub` → baut den Hub an deiner Position. Danach jeweils ein Stück daneben (mindestens
-   25 Blöcke Abstand) `/lna map build labor`, `/lna map build buero` und `/lna map build kueche`
-2. Rejoinen oder Menü-Item (Slot 5) benutzen → Kampagnen-Menü
-3. Am Missionstisch eine Karte (Mission 1, 2 oder 4) anklicken → **[Mission starten]**
+Das Ergebnis ist `server/build/libs/LassNichtsAnbrennen-<version>.jar`, eine einzelne Datei ohne weitere
+Abhängigkeiten:
+
+```bash
+java -jar LassNichtsAnbrennen-<version>.jar
+```
+
+Beim ersten Start legt der Server eine kommentierte `server.yml` neben sich. Damit andere mitspielen können,
+müssen die Ports `25565` (Spiel) und `8164` (Resource Pack) erreichbar sein. Ist der Server aus dem Internet
+erreichbar, gehört unter `pack.host` seine öffentliche Adresse.
+
+## Befehle
+
+Für alle Spieler:
 
 | Befehl | Wirkung |
 |---|---|
-| `/mission` · `/mission start <id>` · `/mission stop` | Missionen anzeigen, starten (für die ganze Gruppe), abbrechen |
-| `/gruppe` · `/gruppe einladen <Name>` · `/gruppe annehmen` · `/gruppe verlassen` | Gruppen für Mehrspieler |
-| `/lna map list` · `/lna map build <map>` · `/lna map tp <map>` | Maps aus `plugin/src/main/resources/maps/` bauen |
-| `/lna fire start <a\|b\|c\|d\|f\|elektro> [stärke]` · `/lna fire list` · `/lna fire clear` | Testbrand am angeschauten Block |
-| `/lna give <item>` · `/lna items` · `/lna refill` | Eigene Items, Feuerlöscher auffüllen |
-| `/lna pack` · `/lna reloadpack` | Resource Pack neu laden bzw. neu gebautes Pack an alle senden |
-| `/credits` | Alle Quellen und Lizenzen |
+| `/mission`, `/mission start <id>`, `/mission stop` | Missionen anzeigen, für die Gruppe starten, abbrechen |
+| `/gruppe einladen <Name>`, `/gruppe annehmen`, `/gruppe verlassen` | Missionen gemeinsam spielen, auf Englisch `/party invite`, `accept`, `leave` |
+| `/credits` | Quellen und Lizenzen aller Assets |
 
-Bauen im Spiel (Berechtigung `lna.build`): Möbel oder Schild in die Hand und **Rechtsklick** auf Boden, Wand oder
-Decke. Andere eigene Items stellt man mit **Shift + Rechtsklick** als Deko ab. **Shift + Linksklick** entfernt
-ein Objekt. Stehen Objekte verkehrt herum, in der Config `furniture.rotation-offset: 180` setzen.
+In der Server-Konsole, mit oder ohne Schrägstrich:
 
-Schneller Testkreislauf für Texturen und Sounds, ohne Server-Neustart:
+| Befehl | Wirkung |
+|---|---|
+| `help` | Alle Befehle |
+| `list` | Wer online ist |
+| `op <Name>`, `deop <Name>` | Operator-Rechte geben und nehmen |
+| `stop` | Server beenden |
 
-```bash
-./gradlew :plugin:devPack
-```
+Operatoren dürfen die Konsolenbefehle auch im Spiel benutzen und haben dort zusätzlich Werkzeuge zum
+Ausprobieren:
 
-danach im Spiel `/lna reloadpack`.
+| Befehl | Wirkung |
+|---|---|
+| `/give <item>` | Ein eigenes Item holen |
+| `/refill` | Den Löscher in der Hand auffüllen |
+| `/fire start <a\|b\|c\|d\|f\|electric> [stärke]`, `/fire clear` | Testbrand auf dem angeschauten Block, alle Brände entfernen |
 
-Auf einem eigenen Server: Jar nach `plugins/` kopieren. In `plugins/LassNichtsAnbrennen/config.yml` unter
-`pack.host` die öffentliche Adresse eintragen und Port `8164` freigeben.
+## Sprache
 
-## Inhalte hinzufügen
+Was Spieler lesen, richtet sich nach der Sprache ihres Minecraft-Clients: Deutsch oder Englisch. Die Texte
+stehen in `content/lang/de.yml` und `content/lang/en.yml`. Infotafeln, Gefahrenbeschreibungen und Quizfragen
+aus den Map- und Missionsdateien sind deutsch.
 
-Alle Inhalte liegen in [`content/`](content) und werden beim Bauen geprüft. Fehler meldet der Builder
-mit Datei und Grund.
+## Inhalte ändern
 
-1. Textur nach `content/textures/item/`, Sound als **Mono-.ogg** nach `content/sounds/`
-2. Eintrag in [`content/items.yml`](content/items.yml), [`content/sounds.yml`](content/sounds.yml) oder
-   [`content/glyphs.yml`](content/glyphs.yml). Das Format ist oben in jeder Datei erklärt
-3. **Jede Datei in [`CREDITS.md`](CREDITS.md) eintragen**, auch eigene. Sonst bricht der Build ab
-4. `./gradlew build`
+Alles, was man ohne Java anfassen kann, liegt in [`content/`](content):
 
-Glyphen funktionieren in jedem Text, den das Plugin verschickt:
-`<glyph:hud_feuerloescher><shift:2>Text` setzt ein Bild und rückt 2 Pixel weiter.
+| Datei oder Ordner | Inhalt |
+|---|---|
+| `items.yml` | Items, Möbel und Schilder mit Namen, Beschreibung und Verhalten |
+| `missions.yml` | Missionen, Zeitlimits und Quizfragen |
+| `maps/` | Grundrisse der Maps als Textraster, dazu Infotexte und Gefahrenstellen |
+| `lang/` | Meldungen auf Deutsch und Englisch |
+| `sounds.yml`, `glyphs.yml` | Sounds und Bildzeichen für das HUD |
+| `textures/`, `models/`, `sounds/` | Die Dateien dazu |
 
-### Generierte Modelle
+Jede Textur, jedes Modell und jeder Sound braucht eine Zeile in [`CREDITS.md`](CREDITS.md), auch eigene
+Werke. Fehlt sie, bricht der Build mit einer Meldung ab, die Datei und Grund nennt.
 
-Die Platzhalter-Modelle, Texturen, HUD-Grafiken und der Sprüh-Sound entstehen per Skript
-(Python-Paket [`tools/assetgen/`](tools/assetgen), ein Modul pro Themengruppe):
+Modelle und Texturen erzeugt ein Skript:
 
 ```bash
 uv run tools/generate_assets.py
 ```
 
-Das Skript schreibt nach `content/`, pflegt die Tabelle „Generierte Assets“ in `CREDITS.md` und löscht
-Dateien, die es nicht mehr erzeugt. Die Modelle sind normale Java-Item-Modelle und lassen sich in
-**Blockbench** öffnen und verfeinern. Wer ein Modell von Hand überarbeitet, nimmt es aus dem Generator heraus
-und trägt es in `CREDITS.md` unter „von Hand gepflegt“ ein.
+Es schreibt nach `content/` und pflegt seinen Teil von `CREDITS.md` selbst. Die Modelle sind gewöhnliche
+Java-Item-Modelle und lassen sich in Blockbench öffnen. Wer eines von Hand überarbeitet, nimmt es aus dem
+Generator heraus.
 
-Beim Benutzen (Rechtsklick halten) wechselt der Client selbst zwischen Modellen. Das wird in `items.yml`
-über `use_models` gesteuert, wie beim Bogen.
+Liegt neben einer laufenden Jar ein Ordner `content/` mit Maps, Missionen oder Sprachdateien, haben diese
+Dateien Vorrang vor den eingebauten. So lassen sich Texte und Grundrisse ändern, ohne neu zu bauen.
 
-## Projektstruktur
+## Aufbau
 
 ```
-├─ packbuilder/   Resource-Pack-Builder (Java, läuft beim Bauen)
-├─ plugin/        Paper-Plugin (Java 25)
-├─ content/       Items, Sounds, Glyphen, Texturen, Modelle
-├─ tools/         Asset-Generator (Python, uv)
-├─ docs/          Projektplan
-├─ CREDITS.md     Quellen und Lizenzen aller Assets
-└─ gradle/        Wrapper und Versionskatalog (libs.versions.toml)
+content/       Items, Missionen, Maps, Texte, Texturen, Modelle, Sounds
+server/        der Server mit der Spiellogik
+packbuilder/   baut aus content/ das Resource Pack und prüft die Credits
+tools/         Generator für Modelle und Texturen (Python)
+docs/          Konzept, Technik, Wettbewerbsregeln
 ```
 
-## Hinweis zur KI-Nutzung
+Wie die Teile zusammenspielen, beschreibt [docs/technik.md](docs/technik.md).
 
-Planung, Grundgerüst, Asset-Generator und alle Platzhalter-Assets (3D-Modelle, Texturen, HUD-Grafiken,
-Sprüh-Sound) sind mit Unterstützung von Claude (Anthropic) entstanden. Das ist in [`CREDITS.md`](CREDITS.md) und in der
-Beitragsbeschreibung angegeben. Idee, Konzept, Projektstruktur und Review stammen vom Projektteam.
+## Wer dahinter steckt
+
+Idee, Konzept und Code stammen von [vxnsin](https://github.com/vxnsin), im Spiel als „vensin“ unterwegs
+und selbst in der Ausbildung im E-Commerce. Im Hub steht dazu eine eigene Ecke.
+
+Danke an
+
+- die Klasse WEC10A, für die das Projekt als Wettbewerbsbeitrag entsteht,
+- das Programm [Jugend will sich-er-leben](https://www.jwsl.de/) der DGUV, dessen Unterrichtskonzept die
+  fachliche Grundlage aller Spieltexte ist,
+- [Minestom](https://minestom.net/), auf dem der Server aufbaut, und
+  [Adventure](https://docs.advntr.dev/) für Texte und Farben.
+
+Die vollständige Liste aller Assets mit Urheber und Lizenz steht in [CREDITS.md](CREDITS.md).
+
+## KI-Nutzung
+
+Der Wettbewerb verlangt, den Einsatz von KI offenzulegen. Bei Planung, Code, dem Asset-Generator und den
+damit erzeugten Modellen, Texturen und Sounds hat Claude (Anthropic) geholfen. Idee, Konzept, Entscheidungen
+und Prüfung liegen beim Projektteam.
 
 ## Lizenz
 
-- Code: [MIT](LICENSE)
-- Eigene Assets (Texturen, Modelle, Sounds, Texte): [CC BY 4.0](LICENSE-ASSETS)
-- Fremde Assets: jeweilige Lizenz laut [`CREDITS.md`](CREDITS.md)
+Der Code steht unter [MIT](LICENSE), eigene Texturen, Modelle, Sounds und Texte unter
+[CC BY 4.0](LICENSE-ASSETS). Für fremde Assets gilt die jeweilige Lizenz laut [CREDITS.md](CREDITS.md).
 
-Minecraft ist eine Marke von Mojang Studios. Dieses Projekt steht in keiner Verbindung zu Mojang,
-Microsoft, der DGUV oder der BGHW.
+Minecraft ist eine Marke von Mojang Studios. Dieses Projekt steht in keiner Verbindung zu Mojang, Microsoft,
+der DGUV oder der BGHW.
