@@ -1,18 +1,17 @@
 tasks.register("dev") {
     group = "lna"
-    description = "Starts the development server with this plugin, WorldEdit and BetterModel"
-    dependsOn(":plugin:runServer")
+    description = "Builds everything and starts the server in server/run"
+    dependsOn(":server:run")
 }
 
 subprojects {
-    group = "io.github.vxnsin.lna"
+    group = "dev.vensin.lna"
     version = "0.1.0-SNAPSHOT"
 
     apply(plugin = "java")
 
     repositories {
         mavenCentral()
-        maven("https://repo.papermc.io/repository/maven-public/")
     }
 
     extensions.configure<JavaPluginExtension> {

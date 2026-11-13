@@ -1,0 +1,61 @@
+# Workshop lab for mission 1 "Das Branddreieck": three fires, each put out by removing one side of the
+# fire triangle (oxygen: lid, fuel: gas valve, heat: cooling with water). Map format: see hub.yml.
+#   fire: { class, order, y, title, hint, solution }   solution lid | valve: sprays do not help
+#   action: valve                                       clickable gas valve
+
+name: "Labor – Werkstatt der Berufsschule"
+height: 4
+floor: minecraft:polished_andesite
+ceiling: minecraft:white_concrete
+light: minecraft:sea_lantern
+light-spacing: 4
+
+legend:
+  "#": { wall: [minecraft:polished_deepslate, minecraft:light_gray_concrete, minecraft:light_gray_concrete, minecraft:polished_deepslate] }
+  "W": { wall: [minecraft:polished_deepslate, minecraft:glass, minecraft:glass, minecraft:polished_deepslate] }
+  ".": {}
+  ":": { floor: minecraft:tuff }
+  "D": { door: minecraft:oak_door, facing: south }
+  "@": { spawn: north }
+  "i": { text: branddreieck, facing: north }
+  # Workshop furniture
+  "z": { objects: [ { id: werkzeugwand, facing: south, y: 2 } ] }
+  "B": { objects: [ { id: werkbank, facing: east } ] }
+  "r": { objects: [ { id: regal, facing: east } ] }
+  "P": { objects: [ { id: palette } ] }
+  "m": { objects: [ { id: metalltonne } ] }
+  # Station 1: oxygen – paper burning in a metal bin, lid on the workbench next to it
+  "t":
+    floor: minecraft:tuff
+    objects: [ { id: metalltonne } ]
+    fire: { class: a, order: 1, y: 2, solution: lid, title: "Papier in der Metalltonne", hint: "Sauerstoff entziehen: Nimm den Deckel von der Werkbank und klicke damit auf die Tonne." }
+  "k": { objects: [ { id: werkbank, facing: south }, { id: topfdeckel, prop: true, facing: south, y: 2, give: true } ] }
+  # Station 2: fuel – burner flame, gas valve next to the bottle
+  "g":
+    floor: minecraft:tuff
+    objects: [ { id: gasbrenner, facing: south } ]
+    fire: { class: c, order: 2, y: 2, solution: valve, title: "Flamme am Gasbrenner", hint: "Brennstoff entziehen: Löschen hilft nicht, solange Gas nachströmt. Schließe das Gasventil (Hebel neben der Flasche)." }
+  "v": { floor: minecraft:tuff, block: "minecraft:lever[face=floor,facing=south]", action: valve }
+  # Station 3: heat – burning waste paper bin, water extinguisher on the wall
+  "p":
+    floor: minecraft:tuff
+    block: minecraft:barrel
+    fire: { class: a, order: 3, y: 2, title: "Brennender Papierkorb", hint: "Wärme entziehen: Der Wasserlöscher (an der Ostwand) kühlt das Papier unter seine Zündtemperatur." }
+  "w": { objects: [ { id: schild_feuerloescher, facing: west, y: 3 }, { id: feuerloescher_wasser, prop: true, facing: west, give: true } ] }
+
+plan:
+  - "#WWWW#####WWWW#####"
+  - "#z..t.k......g.v.z#"
+  - "#B...............B#"
+  - "#B...............B#"
+  - "#r......@........P#"
+  - "#r.....i.........P#"
+  - "#.....m...........#"
+  - "#.......p........w#"
+  - "#########D#########"
+
+texts:
+  branddreieck: |-
+    <gradient:#ff4e00:#ffb000><bold>Das Branddreieck</bold></gradient>
+    <white>Feuer braucht Brennstoff, Sauerstoff und Wärme.</white>
+    <gray>Nimm eine Seite weg – und das Feuer geht aus.</gray>

@@ -1,10 +1,4 @@
-"""Fire extinguishers (six agent types, each with draw and aim use frames) and the extinguishing spray.
-
-Model states, switched by the client while right click is held (see content/items.yml, use_models):
-    ""       idle: hose hangs down the side
-    "_draw"  hose pulled out to the side
-    "_aim"   hose and nozzle point along +x, which the "aim" display preset turns forward
-"""
+"""The "_draw" and "_aim" models are the use frames the client switches to (content/items.yml, use_models)."""
 
 from __future__ import annotations
 
@@ -166,7 +160,7 @@ EXTINGUISHERS = [_extinguisher_asset(kind) for kind in KINDS]
 
 
 def feuerloeschspray() -> Asset:
-    """Aerosol fire extinguishing spray; the nozzle on the actuator points along +x (forward when aiming)."""
+    """The nozzle on the actuator points along +x (forward when aiming)."""
     atlas = Atlas()
     can = p.tile(p.RED, 8, 18)
     p.rect(can, 0, 0, 7, 0, p.RED_RIM)

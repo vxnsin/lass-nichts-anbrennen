@@ -1,8 +1,4 @@
-"""Safety signs (own pixel-art pictograms modeled after the standardized signs) and an evacuation plan.
-
-Green = escape and rescue signs, red = fire protection signs. Signs are thin wall plates whose
-front is the north face.
-"""
+"""Green = escape and rescue signs, red = fire protection signs. The front is the north face."""
 
 from __future__ import annotations
 
@@ -144,7 +140,6 @@ def schild_loeschschlauch() -> Asset:
 
 
 def fluchtplan() -> Asset:
-    """Evacuation plan: floor plan with escape routes, exits, extinguishers and 'you are here'."""
     face = p.tile(p.WHITE, 32, 24)
     p.rect(face, 0, 0, 31, 2, p.SAFETY_GREEN)  # title band
     for x in range(3, 29, 3):

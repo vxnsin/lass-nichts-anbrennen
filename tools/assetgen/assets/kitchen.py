@@ -1,5 +1,3 @@
-"""Kitchen and office appliances: stove with oil pot, deep fryer, fan heater, coffee machine."""
-
 from __future__ import annotations
 
 from .. import paint as p
@@ -11,7 +9,6 @@ STEEL = p.rgb("#c4c8cc")
 
 
 def herd() -> Asset:
-    """Stove with ceramic cooktop and a pot of cooking oil (scenario: grease fire)."""
     atlas = Atlas()
     cooktop = p.tile(p.BLACK, 16, 14)
     for cx, cy, r in ((4, 4, 3.2), (11, 4, 2.6), (4, 10, 2.6), (11, 10, 3.2)):
@@ -59,7 +56,6 @@ def fritteuse() -> Asset:
 
 
 def heizluefter() -> Asset:
-    """Fan heater (hazard: paper too close to the heater)."""
     atlas = Atlas()
     grille = p.tile(p.BLACK, 8, 10)
     for y in range(1, 9, 2):

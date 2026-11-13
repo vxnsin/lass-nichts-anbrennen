@@ -1,0 +1,136 @@
+# Texte, die Spieler im Chat und in der Aktionsleiste sehen (MiniMessage).
+# Die Sprache richtet sich nach dem Minecraft-Client: Deutsch bekommt diese Datei, alles andere en.yml.
+
+lobby:
+  have-already: "<gray>Den hast du schon.</gray>"
+  taken: "<gray>Genommen:</gray> <item>"
+  about-fallback: "<gold>Lass nichts anbrennen</gold> <gray>Idee, Konzept und Code: vxnsin</gray>"
+
+mission:
+  label: "<gold><bold>Mission <number>: <title></bold></gold>"
+  description: "<gray><text></gray>"
+  unavailable: "<dark_gray>Diese Mission ist noch in Arbeit.</dark_gray>"
+  card-open: "<gradient:#ff6a00:#ffd000><bold>Mission <number></bold></gradient><newline><white><title></white><newline><yellow>▶ Rechtsklick</yellow>"
+  card-closed: "<dark_gray>Mission <number></dark_gray><newline><gray><title></gray><newline><red>✖ bald verfügbar</red>"
+  stamped: "<green>✔ Stempel im Brandschutz-Pass</green>"
+  start: "<start><green>[Mission starten]</green></start> <gray>(startet für deine ganze Gruppe)</gray>"
+  title: "<gold>Mission <number>: <title></gold>"
+  subtitle: "<white><text></white>"
+  not-in-mission: "<gray>Du bist in keiner Mission.</gray>"
+  one-minute: "<gold>Noch eine Minute!</gold>"
+  time-up: "<red>Die Zeit ist um!</red>"
+  stamp-earned: "<green>Stempel für den Brandschutz-Pass erhalten! Zurück zum Hub in 10 Sekunden.</green>"
+  list:
+    header: "<gold><bold>Kampagne „Lass nichts anbrennen“</bold></gold> <gray>(Stempel: <count>)</gray>"
+    entry: "<white>Mission <number>: <title></white> <stamp><state>"
+    stamp: "<green>✔</green> "
+    start: "<start><green>[Starten]</green></start>"
+    soon: "<dark_gray>bald verfügbar</dark_gray>"
+  error:
+    unknown: "<red>Unbekannte Mission: <id></red>"
+    unavailable: "<red>Mission <number>: <title> ist noch in Arbeit.</red>"
+    not-leader: "<red>Nur die Gruppenleitung kann Missionen starten.</red>"
+    busy-player: "<red><name> ist schon in einer Mission.</red>"
+    no-map: "<red>Für diese Mission gibt es noch keine Map.</red>"
+    map-busy: "<red>Die Map ist gerade belegt. Warte, bis die andere Gruppe fertig ist.</red>"
+    no-logic: "<red>Für Mission <number>: <title> gibt es noch keine Spiellogik.</red>"
+  hazard:
+    subtitle: "<white>Finde <count> Brandgefahren</white>"
+    intro: "<gray>Rechtsklick auf eine Gefahr, um sie zu melden. Aber Vorsicht: Fehlalarme zählen auch!</gray>"
+    bar: "<white>Gefahren gefunden: <found>/<total>  ·  <time></white>"
+    all-fine: "<gray>Hier ist alles in Ordnung.</gray>"
+    already-found: "<gray>Diese Gefahr wurde schon gemeldet.</gray>"
+    found: "<green>✔</green> <gray><name> hat gefunden:</gray> <white><title></white>"
+    explanation: "<gray>   <text></gray>"
+    all-found: "<green><bold>Alle Gefahren gefunden!</bold></green>"
+    already-false-alarm: "<gray>Das war schon ein Fehlalarm.</gray>"
+    false-alarm: "<red>✘ Fehlalarm von <name>:</red> <gray><text></gray>"
+    no-problem: "Kein Problem."
+    result: "<gold><bold>Mission <number>: <title> – Ergebnis <stars></bold></gold>"
+    summary: "<white><found> von <total> Gefahren gefunden, <alarms> Fehlalarm(e), Zeit <time></white>"
+    missed: "<red>• Übersehen:</red> <white><title></white> <gray>– <text></gray>"
+    failed: "<gold>Für den Stempel brauchst du mindestens <needed> Gefahren. Versuch es noch einmal! Zurück zum Hub in 10 Sekunden.</gold>"
+  training:
+    intro: "<gray>Werkzeuge und Löscher nimmst du per Rechtsklick. Lies die Tipps zu jedem Brand!</gray>"
+    bar: "<white>Brände gelöscht: <done>/<total>  ·  <time></white>"
+    station: "<gold>🔥 Station <number>/<total>: <title></gold> <gray>(<class>)</gray>"
+    hint: "<gray>   Tipp: <text></gray>"
+    all-out: "<green><bold>Alle Brände gelöscht!</bold></green>"
+    put-out: "<green>✔ <name> hat den Brand gelöscht.</green>"
+    valve-right: "<gray>   Richtig: Gasventil zu – ohne Brennstoff erlischt die Flamme.</gray>"
+    valve-closed: "<gray>Das Gasventil ist zu.</gray>"
+    lid-right-fat: "<gray>   Richtig: Deckel drauf und den Herd ausschalten, dann kann sich das Fett nicht wieder entzünden.</gray>"
+    smother-right: "<gray>   Richtig: Ohne Sauerstoff erstickt das Feuer.</gray>"
+    lid-useless: "<gold>Ein Topfdeckel hilft bei diesem Brand nicht.</gold>"
+    blanket-useless: "<gold>Eine Löschdecke hilft bei diesem Brand nicht.</gold>"
+    result: "<gold><bold>Mission <number>: <title> – Ergebnis</bold></gold>"
+    summary: "<white><done> von <total> Bränden gelöscht, <mistakes> Fehler, Zeit <time></white>"
+    mistake-line: "<red>• <mistake>: <count>×</red>"
+    mistake:
+      wrong-class: "Ungeeigneter Löscher"
+      water-on-fat: "Wasser auf brennendes Fett"
+      water-on-electric: "Wasser auf eine elektrische Anlage"
+    failed: "<gold>Für den Stempel: alle Brände mit höchstens <mistakes> Fehlern löschen. Zurück zum Hub in 10 Sekunden.</gold>"
+    failed-quiz: "<gold>Für den Stempel: alle Brände mit höchstens <mistakes> Fehlern löschen und mindestens <answers> Quizfragen richtig. Zurück zum Hub in 10 Sekunden.</gold>"
+  quiz:
+    intro: "<gold>Zum Abschluss ein kurzes Quiz:</gold>"
+    question: "<gold>❓ Frage <number>/<total>: <text></gold>"
+    answer: "<answer><yellow>   [<number>] <text></yellow></answer>"
+    click: "<dark_gray>   Antwort anklicken.</dark_gray>"
+    already: "<gray>Du hast schon geantwortet.</gray>"
+    saved: "<gray>Antwort gespeichert.</gray>"
+    solution: "<green>   Richtig ist [<number>] <text>. <explanation></green>"
+    result: "<white>Dein Quiz: <correct> von <total> richtig.</white>"
+
+party:
+  none: "<gray>Du bist in keiner Gruppe.</gray> <white>Lade jemanden ein:</white> <yellow><click:suggest_command:'/gruppe einladen '>/gruppe einladen \\<Name></click></yellow>"
+  usage-invite: "<gray>So lädst du jemanden ein:</gray> <yellow>/gruppe einladen \\<Name></yellow>"
+  header: "<gold>Deine Gruppe:</gold>"
+  member: "<gray>•</gray> <white><name></white><role>"
+  leader: " <gold>(Leitung)</gold>"
+  leave-button: "<red><click:run_command:'/gruppe verlassen'>[Gruppe verlassen]</click></red>"
+  joined: "<green><name> ist der Gruppe beigetreten.</green>"
+  left: "<gray><name> hat die Gruppe verlassen.</gray>"
+  no-invite: "<red>Du hast keine gültige Einladung.</red>"
+  invite-sent: "<green>Einladung an <name> gesendet.</green>"
+  invited: "<gold><name></gold> <white>lädt dich in eine Gruppe ein.</white> <green><click:run_command:'/gruppe annehmen'>[Annehmen]</click></green> <gray>(1 Minute gültig)</gray>"
+  error:
+    self: "<red>Du kannst dich nicht selbst einladen.</red>"
+    in-party: "<red><name> ist schon in einer Gruppe.</red>"
+    not-leader: "<red>Nur die Gruppenleitung kann einladen.</red>"
+    unknown-player: "<red><name> ist nicht online.</red>"
+
+npc:
+  author: "<gray>Idee, Konzept & Code</gray>"
+
+fire:
+  class:
+    a: "Brandklasse A (feste Stoffe)"
+    b: "Brandklasse B (Flüssigkeiten)"
+    c: "Brandklasse C (Gase)"
+    d: "Brandklasse D (Metalle)"
+    f: "Brandklasse F (Speiseöle und -fette)"
+    electric: "Brand an elektrischen Anlagen"
+  fed: "<gold>Die Flammen brennen weiter: Entferne eine Seite des Branddreiecks!</gold>"
+  wrong-class: "<gold>Wirkt kaum: Dieser Löscher ist nicht geeignet für <class>.</gold>"
+  smoldering: "<yellow>Flammen aus, jetzt die Glutnester nachlöschen!</yellow>"
+  reignited: "<red>Wiederentzündung! Nach dem Löschen auf Glutnester achten.</red>"
+  extinguished: "<green>Brand gelöscht!</green>"
+  smothered: "<green>Sauerstoff weg, das Feuer ist erstickt!</green>"
+  flare:
+    title: "<red>Fettexplosion!</red>"
+    subtitle: "<gray>Wasser verdampft schlagartig im heißen Fett.</gray>"
+    lesson: "<gold>Fettbrände nie mit Wasser löschen! Herd aus, Deckel drauf oder Fettbrandlöscher (Brandklasse F) benutzen.</gold>"
+  shock:
+    title: "<red>Stromschlag!</red>"
+    subtitle: "<gray>Wasser leitet Strom.</gray>"
+    lesson: "<gold>Brände an elektrischen Anlagen: Strom abschalten und einen CO₂-Löscher benutzen, Abstand halten.</gold>"
+
+extinguisher:
+  empty: "<red>Leer!</red> <gray>Benutzte Feuerlöscher nicht zurückhängen, sondern melden.</gray>"
+  fill: "<gray>Füllstand:</gray>"
+
+credits:
+  header: "<gold><bold>Quellen & Lizenzen</bold></gold> <gray>(<count> Dateien)</gray>"
+  line: "<gray>•</gray> <white><count> Dateien</white> <gray>von</gray> <author> <dark_gray>(<license>)</dark_gray>"
+  source: "<aqua>[Quelle]</aqua>"

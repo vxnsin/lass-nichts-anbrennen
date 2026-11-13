@@ -1,0 +1,73 @@
+# Break room kitchen (west) and training hall (east) for mission 4. Map format: see hub.yml.
+#   fire: { class, order, y, title, hint }   fire spot started by the fire training mission, in order
+#   objects ... give: true                   clicking the object hands out that item
+
+name: "Pausenküche und Trainingshalle"
+height: 4
+floor: minecraft:white_concrete
+ceiling: minecraft:white_concrete
+light: minecraft:sea_lantern
+light-spacing: 4
+
+legend:
+  "#": { wall: [minecraft:polished_deepslate, minecraft:white_concrete, minecraft:white_concrete, minecraft:polished_deepslate] }
+  "W": { wall: [minecraft:polished_deepslate, minecraft:glass, minecraft:glass, minecraft:polished_deepslate] }
+  "=": { wall: [minecraft:light_gray_concrete, minecraft:white_concrete, minecraft:white_concrete, minecraft:light_gray_concrete] }
+  ".": {}
+  ",": { floor: minecraft:polished_andesite }
+  "Z": { floor: minecraft:polished_andesite, door: minecraft:oak_door, facing: east }
+  "@": { spawn: east }
+  "i": { text: loescherwand, facing: north }
+  # Kitchen: counters with upper cabinets, stove, deep fryer, lid, tables with benches
+  "S": { objects: [ { id: spuele, facing: south }, { id: haengeschrank, facing: south, y: 3 } ] }
+  "K": { block: minecraft:smooth_quartz, objects: [ { id: haengeschrank, facing: south, y: 3 } ] }
+  "R": { block: minecraft:smooth_quartz, objects: [ { id: fritteuse, facing: south, y: 2 }, { id: haengeschrank, facing: south, y: 3 } ] }
+  "k": { block: minecraft:smooth_quartz, objects: [ { id: topfdeckel, prop: true, facing: south, y: 2, give: true }, { id: haengeschrank, facing: south, y: 3 } ] }
+  "H":
+    objects: [ { id: herd, facing: south } ]
+    fire: { class: f, order: 1, y: 2, title: "Fettbrand am Herd", hint: "Herd aus, Deckel drauf (Topfdeckel nehmen und auf den Herd klicken) oder Fettbrandlöscher. Niemals Wasser!" }
+  "e": { objects: [ { id: esstisch } ] }
+  "n": { objects: [ { id: bank, facing: north } ] }
+  "q": { objects: [ { id: pflanze } ] }
+  # Training hall: stations
+  "a":
+    floor: minecraft:polished_andesite
+    block: minecraft:oak_planks
+    fire: { class: a, order: 2, y: 2, title: "Brennende Holzpalette", hint: "Feste Stoffe: Wasser-, Schaum-, ABC-Pulver- oder Fettbrandlöscher." }
+  "b":
+    floor: minecraft:polished_andesite
+    fire: { class: b, order: 3, y: 1, title: "Brennende Lösungsmittel-Pfütze", hint: "Brennbare Flüssigkeiten: Schaum-, ABC-Pulver- oder CO₂-Löscher." }
+  "E":
+    floor: minecraft:polished_andesite
+    objects: [ { id: heizluefter, facing: west } ]
+    fire: { class: elektro, order: 4, y: 2, title: "Brand am Heizlüfter", hint: "Elektrische Anlage: CO₂-Löscher, Abstand halten. Kein Wasser!" }
+  "d":
+    floor: minecraft:polished_andesite
+    block: minecraft:iron_block
+    fire: { class: d, order: 5, y: 2, title: "Brennende Metallspäne", hint: "Metallbrände: nur Metallbrandlöscher (Brandklasse D), sanft aufbringen." }
+  # Extinguisher wall
+  "1": { objects: [ { id: feuerloescher_abc, prop: true, facing: north, give: true } ] }
+  "2": { objects: [ { id: feuerloescher_co2, prop: true, facing: north, give: true } ] }
+  "3": { objects: [ { id: feuerloescher_schaum, prop: true, facing: north, give: true } ] }
+  "4": { objects: [ { id: feuerloescher_wasser, prop: true, facing: north, give: true } ] }
+  "5": { objects: [ { id: feuerloescher_fett, prop: true, facing: north, give: true } ] }
+  "6": { objects: [ { id: feuerloescher_metall, prop: true, facing: north, give: true } ] }
+  "g": { objects: [ { id: loeschdecke, prop: true, facing: north, give: true } ] }
+
+plan:
+  - "#WWWW##WWWW##########"
+  - "#SKHKRk...=,,,,,,,,,#"
+  - "#.........=,,a,,,,,,#"
+  - "#.e.e.....Z,,,,,b,,,#"
+  - "#.n.n.....=,,,,,,,,,#"
+  - "#.........=,,,,E,,,,#"
+  - "#...q..@..=,,,,,,,,,#"
+  - "#.........=,,,,,,,d,#"
+  - "#123456gi.=,,,,,,,,,#"
+  - "#####################"
+
+texts:
+  loescherwand: |-
+    <gradient:#ff4e00:#ffb000><bold>Löscherwand</bold></gradient>
+    <white>Rechtsklick auf einen Löscher, um ihn zu nehmen.</white>
+    <gray>Die Brandklassen stehen auf dem Etikett (Maus darüber).</gray>

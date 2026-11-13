@@ -1,0 +1,22 @@
+# Lass nichts anbrennen: server settings
+
+# Port Minecraft connects to.
+port: 25565
+
+# true: only paid Minecraft accounts can join and skins work. Use false only on a closed LAN.
+online-mode: true
+
+# Text in the server list (MiniMessage).
+motd: "<gradient:#ff4e00:#ffb000><bold>Lass nichts anbrennen</bold></gradient><newline><gray>Brandschutz zum Mitspielen</gray>"
+
+pack:
+  # Address players download the resource pack from. Empty: the LAN address of this machine.
+  # If the server is reachable from the internet, put its public address or domain here.
+  host: ""
+  # Port of the built-in download server. It has to be reachable through the firewall.
+  port: 8164
+  # A fixed download address instead of the built-in server. The file there must be exactly the bundled pack.
+  public-url: ""
+  # Models and HUD are missing without the pack, so it is mandatory.
+  required: true
+  prompt: "<gold>Lass nichts anbrennen</gold> <gray>needs its own resource pack with textures and sounds.</gray>"

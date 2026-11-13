@@ -5,4 +5,4 @@ plugins {
 
 rootProject.name = "lass-nichts-anbrennen"
 
-include("packbuilder", "plugin")
+include("packbuilder", "server")

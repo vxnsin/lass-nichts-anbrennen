@@ -1,5 +1,3 @@
-"""Java item model builder: cuboids, element rotations and display presets with automatic fitting."""
-
 from __future__ import annotations
 
 import math
@@ -22,10 +20,7 @@ class Cuboid:
 
 
 class Model:
-    """A Java item model made of cuboids. Faces reference atlas tiles by name.
-
-    Convention: the front of wall-mounted objects is the north face (towards -z).
-    """
+    """Convention: the front of wall-mounted objects is the north face (towards -z)."""
 
     def __init__(self, preset: str) -> None:
         if preset not in PRESETS:
@@ -35,7 +30,7 @@ class Model:
 
     def box(self, name: str, start: Vec3, end: Vec3, material: str, *,
             rotation: tuple[str, float, Vec3] | None = None, **faces: str | None) -> Model:
-        """Adds a cuboid. `material` covers all faces; keyword arguments override single faces (None hides one)."""
+        """`material` covers all faces; keyword arguments override single faces (None hides one)."""
         for low, high in zip(start, end):
             if low > high or low < COORDINATE_RANGE[0] or high > COORDINATE_RANGE[1]:
                 raise ValueError(f"{name}: invalid bounds {start} -> {end}")
@@ -83,14 +78,7 @@ class Model:
         }
 
 
-# ---------------------------------------------------------------------------------------------
-# Display transforms
-#
-# Minecraft applies: translate, then rotate (XYZ, i.e. R = Rx * Ry * Rz), then scale, around the
-# model center (8, 8, 8). `_transform` adds a translation that moves the bounding box center of the
-# model to the display origin, so off-center or oversized models still sit correctly.
-# Left-hand transforms follow the vanilla convention: rotation y and z negated.
-# ---------------------------------------------------------------------------------------------
+# Minecraft applies translate, then rotate (R = Rx * Ry * Rz), then scale, around the model center (8, 8, 8).
 
 def _rotation_matrix(rx: float, ry: float, rz: float) -> list[list[float]]:
     x, y, z = (math.radians(a) for a in (rx, ry, rz))
@@ -127,7 +115,7 @@ def _dims(bounds: tuple[Vec3, Vec3]) -> tuple[Vec3, float]:
 
 def _preset(gui_rotation: Vec3, gui_fill: float, hand_third: tuple[Vec3, float, Vec3],
             hand_first: tuple[Vec3, float, Vec3], fixed_rotation: Vec3, ground_scale: float):
-    """Creates a preset function. Hand scales are relative to a 16-unit model and shrink larger models."""
+    """Hand scales are relative to a 16-unit model and shrink larger models."""
 
     def build(bounds: tuple[Vec3, Vec3]) -> dict:
         center, size = _dims(bounds)
@@ -149,19 +137,16 @@ def _preset(gui_rotation: Vec3, gui_fill: float, hand_third: tuple[Vec3, float, 
 
 
 PRESETS = {
-    # Carried upright (extinguishers, spray can): hose side faces the camera in first person.
     "upright": _preset((15, -35, 0), 14.5, ((0, -90, 0), 0.5, (0, 0, 1)),
                        ((0, -75, 0), 0.45, (1.5, 0.5, -1)), (0, 180, 0), 0.35),
     # While spraying: model +x (hose/nozzle direction) points forward, raised to chest height.
     "aim": _preset((15, -35, 0), 14.5, ((0, -90, 0), 0.5, (0, 2.5, 2)),
                    ((0, 95, 0), 0.45, (-1, 3, -2)), (0, 180, 0), 0.35),
-    # Small handheld objects (phone, battery, charger, lid).
     "small": _preset((25, -40, 0), 12.5, ((0, -90, 0), 0.6, (0, 2, 1)),
                      ((0, -60, 0), 0.6, (1, 2, 0)), (0, 180, 0), 0.4),
     # Thin plates whose front is the north face (cards, clipboards, signs).
     "flat": _preset((0, 180, 0), 14.0, ((0, 180, 0), 0.5, (0, 1, 0.5)),
                     ((0, 170, 0), 0.5, (0, 2, 0)), (0, 180, 0), 0.4),
-    # Block-like furniture, vanilla block/block angles.
     "block": _preset((30, 225, 0), 10.0, ((75, 45, 0), 0.375, (0, 2.5, 0)),
                      ((0, 45, 0), 0.4, (0, 0, 0)), (0, 0, 0), 0.25),
     # Wall-mounted objects (front = north face, back at z = 16).

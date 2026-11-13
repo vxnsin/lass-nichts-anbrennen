@@ -1,9 +1,9 @@
 # Quellen und Lizenzen
 
-Jede Datei in `content/textures`, `content/models`, `content/sounds` und `content/entities` braucht hier
+Jede Datei in `content/textures`, `content/models` und `content/sounds` braucht hier
 einen Eintrag, auch eigene Werke. Der Pack-Builder bricht sonst ab.
 
-Regeln für fremde Dateien (siehe [docs/PLAN.md](docs/PLAN.md), Abschnitt 5):
+Regeln für fremde Dateien (ausführlich in [docs/wettbewerb.md](docs/wettbewerb.md)):
 
 - **Erlaubt:** CC0, CC BY, CC BY-SA
 - **Vermeiden:** CC BY-NC (der Builder warnt)
@@ -30,16 +30,34 @@ Diese Tabelle schreibt `uv run tools/generate_assets.py` automatisch neu. Bitte 
 |---|---|---|---|---|---|
 | models/furniture/akku_ladeschrank.json | Akku-Ladeschrank (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/akku_quarantaenebox.json | Akku-Quarantänebox (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/aktenschrank.json | Aktenschrank (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/bank.json | Sitzbank (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/brandschutztuer.json | Brandschutztür (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/buerostuhl.json | Bürostuhl (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/deckenlampe.json | Deckenlampe (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/drucker.json | Drucker (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/druckknopfmelder.json | Druckknopfmelder (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/esstisch.json | Esstisch (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/feuerloescher_halter.json | Feuerlöscher-Wandhalter (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/fritteuse.json | Fritteuse (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/gasbrenner.json | Gasbrenner mit Flasche (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/haengeschrank.json | Hängeschrank (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/heizluefter.json | Heizlüfter (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/herd.json | Herd mit Topf (Öl) (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/kaffeemaschine.json | Kaffeemaschine (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/metalltonne.json | Metalltonne (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/palette.json | Holzpalette (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/pflanze.json | Topfpflanze (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/rauchmelder.json | Rauchmelder (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/regal.json | Regal mit Ordnern (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/schreibtisch.json | Schreibtisch mit Monitor (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/sprinkler.json | Sprinklerkopf (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/spuele.json | Spüle (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/furniture/wandhydrant.json | Wandhydrant (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/wasserspender.json | Wasserspender (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/werkbank.json | Werkbank (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/werkzeugwand.json | Werkzeugwand (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| models/furniture/whiteboard.json | Whiteboard (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/item/akku.json | Akku (intakt) (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/item/akku_beschaedigt.json | Akku (beschädigt) (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | models/item/akku_geblaeht.json | Akku (aufgebläht) (3D-Modell) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
@@ -86,16 +104,34 @@ Diese Tabelle schreibt `uv run tools/generate_assets.py` automatisch neu. Bitte 
 | sounds/feuerloescher/spray.ogg | Feuerlöscher sprüht (synthetisch) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/akku_ladeschrank.png | Akku-Ladeschrank (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/akku_quarantaenebox.png | Akku-Quarantänebox (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/aktenschrank.png | Aktenschrank (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/bank.png | Sitzbank (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/brandschutztuer.png | Brandschutztür (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/buerostuhl.png | Bürostuhl (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/deckenlampe.png | Deckenlampe (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/drucker.png | Drucker (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/druckknopfmelder.png | Druckknopfmelder (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/esstisch.png | Esstisch (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/feuerloescher_halter.png | Feuerlöscher-Wandhalter (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/fritteuse.png | Fritteuse (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/gasbrenner.png | Gasbrenner mit Flasche (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/haengeschrank.png | Hängeschrank (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/heizluefter.png | Heizlüfter (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/herd.png | Herd mit Topf (Öl) (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/kaffeemaschine.png | Kaffeemaschine (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/metalltonne.png | Metalltonne (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/palette.png | Holzpalette (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/pflanze.png | Topfpflanze (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/rauchmelder.png | Rauchmelder (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/regal.png | Regal mit Ordnern (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/schreibtisch.png | Schreibtisch mit Monitor (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/sprinkler.png | Sprinklerkopf (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/spuele.png | Spüle (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/furniture/wandhydrant.png | Wandhydrant (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/wasserspender.png | Wasserspender (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/werkbank.png | Werkbank (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/werkzeugwand.png | Werkzeugwand (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
+| textures/furniture/whiteboard.png | Whiteboard (Textur) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/hud/bar_empty.png | Füllstandsbalken leer (HUD) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/hud/bar_full.png | Füllstandsbalken voll (HUD) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |
 | textures/hud/feuerloescher.png | Feuerlöscher-Symbol (HUD) | vxnsin, mit KI-Unterstützung erzeugt | tools/generate_assets.py | CC BY 4.0 | Platzhalter |

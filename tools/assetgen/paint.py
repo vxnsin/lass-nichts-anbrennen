@@ -1,5 +1,3 @@
-"""Color helpers and tile painters for procedurally drawn pixel-art textures."""
-
 from __future__ import annotations
 
 import random
@@ -17,7 +15,6 @@ def rgb(value: str) -> RGB:
     return int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16)
 
 
-# Shared palette
 RED = rgb("#c8102e")
 RED_DARK = rgb("#8e0b1f")
 RED_RIM = rgb("#600816")
@@ -69,10 +66,7 @@ def canvas(width: int, height: int, fill: RGBA = TRANSPARENT) -> Image.Image:
 
 def tile(color: RGB, width: int = 8, height: int = 8, *, profile: str | None = None, vertical: float = 0.0,
          noise: float = 0.0, border: RGB | None = None, seed: int = 0) -> Image.Image:
-    """Uniform material tile with optional curvature shading, vertical gradient, noise and a 1 px border.
-
-    vertical > 0 brightens the top and darkens the bottom by that fraction.
-    """
+    """vertical > 0 brightens the top and darkens the bottom by that fraction."""
     rng = random.Random(seed)
     columns = column_profile(width, profile)
     image = canvas(width, height)
@@ -86,7 +80,7 @@ def tile(color: RGB, width: int = 8, height: int = 8, *, profile: str | None = N
 
 
 def grid(rows: list[str], palette: dict[str, RGB | RGBA]) -> Image.Image:
-    """Pixel grid from strings; '.' is transparent, every other symbol must be in the palette."""
+    """'.' is transparent, every other symbol must be in the palette."""
     width = len(rows[0])
     if any(len(row) != width for row in rows):
         raise ValueError("all grid rows must have the same width")
@@ -101,7 +95,6 @@ def grid(rows: list[str], palette: dict[str, RGB | RGBA]) -> Image.Image:
 
 
 def apply_profile(image: Image.Image, profile: str) -> Image.Image:
-    """Applies column shading to an existing tile (e.g. a label painted onto a curved body)."""
     columns = column_profile(image.width, profile)
     result = image.copy()
     for y in range(image.height):
@@ -113,7 +106,6 @@ def apply_profile(image: Image.Image, profile: str) -> Image.Image:
 
 
 def stripes(first: RGB, second: RGB, width: int, height: int, period: int = 4) -> Image.Image:
-    """Diagonal warning stripes."""
     image = canvas(width, height)
     for y in range(height):
         for x in range(width):
@@ -122,7 +114,6 @@ def stripes(first: RGB, second: RGB, width: int, height: int, period: int = 4) -
 
 
 def perforated(color: RGB, hole: RGB, width: int, height: int, step: int = 2) -> Image.Image:
-    """Sheet metal with a regular hole pattern (ventilation grilles, cabinet doors)."""
     image = tile(color, width, height, border=tuple(int(c * 0.7) for c in color))
     for y in range(1, height - 1, step):
         for x in range(1 + (y // step) % 2, width - 1, step):
@@ -131,7 +122,7 @@ def perforated(color: RGB, hole: RGB, width: int, height: int, step: int = 2) ->
 
 
 def rect(image: Image.Image, x0: int, y0: int, x1: int, y1: int, color: RGB) -> Image.Image:
-    """Fills the inclusive rectangle (x0, y0)-(x1, y1)."""
+    """Inclusive rectangle (x0, y0)-(x1, y1)."""
     for y in range(max(0, y0), min(image.height, y1 + 1)):
         for x in range(max(0, x0), min(image.width, x1 + 1)):
             image.putpixel((x, y), shade(color))
@@ -139,7 +130,7 @@ def rect(image: Image.Image, x0: int, y0: int, x1: int, y1: int, color: RGB) -> 
 
 
 def outline(image: Image.Image, x0: int, y0: int, x1: int, y1: int, color: RGB) -> Image.Image:
-    """Draws a 1 px rectangle outline (inclusive coordinates)."""
+    """Inclusive coordinates."""
     rect(image, x0, y0, x1, y0, color)
     rect(image, x0, y1, x1, y1, color)
     rect(image, x0, y0, x0, y1, color)
@@ -148,7 +139,7 @@ def outline(image: Image.Image, x0: int, y0: int, x1: int, y1: int, color: RGB) 
 
 
 def circle(image: Image.Image, cx: float, cy: float, radius: float, color: RGB, *, ring: float = 0.0) -> Image.Image:
-    """Filled circle, or a ring of the given thickness when ring > 0."""
+    """A ring of the given thickness when ring > 0."""
     for y in range(image.height):
         for x in range(image.width):
             distance = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5
@@ -164,7 +155,6 @@ def overlay(base: Image.Image, top: Image.Image, x: int, y: int) -> Image.Image:
 
 def label(width: int, height: int, background: RGB, lines: list[tuple[int, RGB]], *,
           text_rows: tuple[int, ...] = (), ink: RGB = (80, 80, 90)) -> Image.Image:
-    """Label tile: background, full-width colored lines at given rows and dashed 'small print' rows."""
     image = tile(background, width, height)
     for row, color in lines:
         for x in range(width):

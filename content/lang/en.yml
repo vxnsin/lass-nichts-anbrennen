@@ -1,0 +1,136 @@
+# Texts players see in chat and in the action bar (MiniMessage).
+# The language follows the Minecraft client: German gets de.yml, everything else this file.
+
+lobby:
+  have-already: "<gray>You already have that one.</gray>"
+  taken: "<gray>Picked up:</gray> <item>"
+  about-fallback: "<gold>Lass nichts anbrennen</gold> <gray>Idea, concept and code: vxnsin</gray>"
+
+mission:
+  label: "<gold><bold>Mission <number>: <title></bold></gold>"
+  description: "<gray><text></gray>"
+  unavailable: "<dark_gray>This mission is still being built.</dark_gray>"
+  card-open: "<gradient:#ff6a00:#ffd000><bold>Mission <number></bold></gradient><newline><white><title></white><newline><yellow>▶ Right click</yellow>"
+  card-closed: "<dark_gray>Mission <number></dark_gray><newline><gray><title></gray><newline><red>✖ coming soon</red>"
+  stamped: "<green>✔ Stamped in your fire safety pass</green>"
+  start: "<start><green>[Start mission]</green></start> <gray>(starts for your whole party)</gray>"
+  title: "<gold>Mission <number>: <title></gold>"
+  subtitle: "<white><text></white>"
+  not-in-mission: "<gray>You are not in a mission.</gray>"
+  one-minute: "<gold>One minute left!</gold>"
+  time-up: "<red>Time is up!</red>"
+  stamp-earned: "<green>You earned a stamp for your fire safety pass! Back to the hub in 10 seconds.</green>"
+  list:
+    header: "<gold><bold>Campaign “Lass nichts anbrennen”</bold></gold> <gray>(stamps: <count>)</gray>"
+    entry: "<white>Mission <number>: <title></white> <stamp><state>"
+    stamp: "<green>✔</green> "
+    start: "<start><green>[Start]</green></start>"
+    soon: "<dark_gray>coming soon</dark_gray>"
+  error:
+    unknown: "<red>Unknown mission: <id></red>"
+    unavailable: "<red>Mission <number>: <title> is still being built.</red>"
+    not-leader: "<red>Only the party leader can start missions.</red>"
+    busy-player: "<red><name> is already in a mission.</red>"
+    no-map: "<red>This mission has no map yet.</red>"
+    map-busy: "<red>The map is in use right now. Wait until the other party is done.</red>"
+    no-logic: "<red>Mission <number>: <title> has no game logic yet.</red>"
+  hazard:
+    subtitle: "<white>Find <count> fire hazards</white>"
+    intro: "<gray>Right click a hazard to report it. But careful: false alarms count too!</gray>"
+    bar: "<white>Hazards found: <found>/<total>  ·  <time></white>"
+    all-fine: "<gray>Everything is fine here.</gray>"
+    already-found: "<gray>This hazard has already been reported.</gray>"
+    found: "<green>✔</green> <gray><name> found:</gray> <white><title></white>"
+    explanation: "<gray>   <text></gray>"
+    all-found: "<green><bold>All hazards found!</bold></green>"
+    already-false-alarm: "<gray>That false alarm was already raised.</gray>"
+    false-alarm: "<red>✘ False alarm by <name>:</red> <gray><text></gray>"
+    no-problem: "No problem here."
+    result: "<gold><bold>Mission <number>: <title> – result <stars></bold></gold>"
+    summary: "<white><found> of <total> hazards found, <alarms> false alarm(s), time <time></white>"
+    missed: "<red>• Missed:</red> <white><title></white> <gray>– <text></gray>"
+    failed: "<gold>You need at least <needed> hazards for the stamp. Give it another try! Back to the hub in 10 seconds.</gold>"
+  training:
+    intro: "<gray>Right click tools and extinguishers to take them. Read the tip for each fire!</gray>"
+    bar: "<white>Fires put out: <done>/<total>  ·  <time></white>"
+    station: "<gold>🔥 Station <number>/<total>: <title></gold> <gray>(<class>)</gray>"
+    hint: "<gray>   Tip: <text></gray>"
+    all-out: "<green><bold>All fires are out!</bold></green>"
+    put-out: "<green>✔ <name> put out the fire.</green>"
+    valve-right: "<gray>   Correct: gas valve closed – without fuel the flame goes out.</gray>"
+    valve-closed: "<gray>The gas valve is closed.</gray>"
+    lid-right-fat: "<gray>   Correct: lid on and stove off, then the fat cannot reignite.</gray>"
+    smother-right: "<gray>   Correct: without oxygen the fire is smothered.</gray>"
+    lid-useless: "<gold>A pot lid does not help with this fire.</gold>"
+    blanket-useless: "<gold>A fire blanket does not help with this fire.</gold>"
+    result: "<gold><bold>Mission <number>: <title> – result</bold></gold>"
+    summary: "<white><done> of <total> fires put out, <mistakes> mistake(s), time <time></white>"
+    mistake-line: "<red>• <mistake>: <count>×</red>"
+    mistake:
+      wrong-class: "Unsuitable extinguisher"
+      water-on-fat: "Water on burning fat"
+      water-on-electric: "Water on electrical equipment"
+    failed: "<gold>For the stamp: put out all fires with at most <mistakes> mistakes. Back to the hub in 10 seconds.</gold>"
+    failed-quiz: "<gold>For the stamp: put out all fires with at most <mistakes> mistakes and get at least <answers> quiz questions right. Back to the hub in 10 seconds.</gold>"
+  quiz:
+    intro: "<gold>To finish, a short quiz:</gold>"
+    question: "<gold>❓ Question <number>/<total>: <text></gold>"
+    answer: "<answer><yellow>   [<number>] <text></yellow></answer>"
+    click: "<dark_gray>   Click an answer.</dark_gray>"
+    already: "<gray>You have already answered.</gray>"
+    saved: "<gray>Answer saved.</gray>"
+    solution: "<green>   The right answer is [<number>] <text>. <explanation></green>"
+    result: "<white>Your quiz: <correct> of <total> right.</white>"
+
+party:
+  none: "<gray>You are not in a party.</gray> <white>Invite someone:</white> <yellow><click:suggest_command:'/party invite '>/party invite \\<name></click></yellow>"
+  usage-invite: "<gray>This is how you invite someone:</gray> <yellow>/party invite \\<name></yellow>"
+  header: "<gold>Your party:</gold>"
+  member: "<gray>•</gray> <white><name></white><role>"
+  leader: " <gold>(leader)</gold>"
+  leave-button: "<red><click:run_command:'/party leave'>[Leave party]</click></red>"
+  joined: "<green><name> joined the party.</green>"
+  left: "<gray><name> left the party.</gray>"
+  no-invite: "<red>You have no valid invitation.</red>"
+  invite-sent: "<green>Invitation sent to <name>.</green>"
+  invited: "<gold><name></gold> <white>invites you to a party.</white> <green><click:run_command:'/party accept'>[Accept]</click></green> <gray>(valid for 1 minute)</gray>"
+  error:
+    self: "<red>You cannot invite yourself.</red>"
+    in-party: "<red><name> is already in a party.</red>"
+    not-leader: "<red>Only the party leader can invite.</red>"
+    unknown-player: "<red><name> is not online.</red>"
+
+npc:
+  author: "<gray>Idea, concept & code</gray>"
+
+fire:
+  class:
+    a: "class A fires (solids)"
+    b: "class B fires (liquids)"
+    c: "class C fires (gases)"
+    d: "class D fires (metals)"
+    f: "class F fires (cooking oils and fats)"
+    electric: "fires on electrical equipment"
+  fed: "<gold>The flames keep burning: take away one side of the fire triangle!</gold>"
+  wrong-class: "<gold>Barely works: this extinguisher is not suitable for <class>.</gold>"
+  smoldering: "<yellow>Flames are out, now put out the embers!</yellow>"
+  reignited: "<red>It reignited! Watch for embers after putting a fire out.</red>"
+  extinguished: "<green>Fire put out!</green>"
+  smothered: "<green>No oxygen left, the fire is smothered!</green>"
+  flare:
+    title: "<red>Grease explosion!</red>"
+    subtitle: "<gray>Water turns to steam instantly in hot fat.</gray>"
+    lesson: "<gold>Never put water on a grease fire! Turn off the stove, put a lid on it or use a class F extinguisher.</gold>"
+  shock:
+    title: "<red>Electric shock!</red>"
+    subtitle: "<gray>Water conducts electricity.</gray>"
+    lesson: "<gold>Fires on electrical equipment: switch off the power and use a CO₂ extinguisher, keep your distance.</gold>"
+
+extinguisher:
+  empty: "<red>Empty!</red> <gray>Do not hang used extinguishers back up, report them.</gray>"
+  fill: "<gray>Fill level:</gray>"
+
+credits:
+  header: "<gold><bold>Sources & licenses</bold></gold> <gray>(<count> files)</gray>"
+  line: "<gray>•</gray> <white><count> files</white> <gray>by</gray> <author> <dark_gray>(<license>)</dark_gray>"
+  source: "<aqua>[source]</aqua>"

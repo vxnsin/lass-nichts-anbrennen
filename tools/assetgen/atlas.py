@@ -1,5 +1,3 @@
-"""Packs named tiles into a square texture atlas and maps tile names to model UVs."""
-
 from __future__ import annotations
 
 from PIL import Image
@@ -8,7 +6,7 @@ MAX_SIZE = 256
 
 
 class Atlas:
-    """Collects tiles for one model texture. UVs are expressed in model space (0-16)."""
+    """UVs are expressed in model space (0-16)."""
 
     def __init__(self) -> None:
         self._tiles: dict[str, Image.Image] = {}

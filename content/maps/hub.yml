@@ -1,0 +1,107 @@
+# Hub: classroom at the vocational school with blackboard, mission table, author corner and the school yard
+# with the assembly point.
+#
+# Map format (shared by all maps):
+#   plan       rows from north (top) to south (bottom), columns from west (left) to east (right);
+#              one character = one block column. The builder places the map with its north-west corner
+#              at the player's position and the floor one block below the player's feet.
+#   height     wall height in blocks; the ceiling sits on top (cells with roof: false stay open)
+#   floor      default floor block; ceiling / light: ceiling block and lamp block (every light-spacing cells)
+#   legend     what each plan character means:
+#     wall: [blocks]     wall column, bottom to top (the last block repeats up to the height)
+#     floor / roof       override floor block, roof: false for open-air cells
+#     door: block        vanilla door (two blocks high), facing: north|east|south|west
+#     block: data        one block on the floor (e.g. a table "minecraft:dark_oak_slab[type=top]")
+#     pillar: [blocks]   blocks stacked on the floor; minecraft:air skips a height
+#     spawn: facing      player spawn of the map
+#     text: key          fixed floating text (from texts) at the back of the cell, facing `facing`
+#     mission: id        mission card on the block of this cell (mission table)
+#     npc: name          standing figure with that player's skin
+#     hazard / safe      on a block cell: makes the block itself clickable for missions
+#     objects: list      custom items: id, facing, y (1 = standing on the floor), prop (decoration),
+#                        collision, give (click hands out the item), hazard / safe
+
+name: "Hub – Berufsschule"
+height: 4
+floor: minecraft:oak_planks
+ceiling: minecraft:white_concrete
+light: minecraft:sea_lantern
+light-spacing: 4
+
+legend:
+  "#": { wall: [minecraft:polished_deepslate, minecraft:white_concrete, minecraft:white_concrete, minecraft:polished_deepslate] }
+  "W": { wall: [minecraft:polished_deepslate, minecraft:glass, minecraft:glass, minecraft:polished_deepslate] }
+  "K": { wall: [minecraft:polished_deepslate, minecraft:black_concrete, minecraft:black_concrete, minecraft:polished_deepslate] }
+  ".": {}
+  "D": { door: minecraft:oak_door, facing: south }
+  "S": { spawn: north }
+  # Classroom
+  "i": { text: willkommen, facing: south }
+  "m": { text: missionen, facing: south }
+  "L": { objects: [ { id: schreibtisch, facing: north } ] }
+  "T": { objects: [ { id: schreibtisch, facing: south } ] }
+  "c": { objects: [ { id: buerostuhl, facing: north } ] }
+  "b": { objects: [ { id: whiteboard, facing: east, y: 2 } ] }
+  "w": { objects: [ { id: wasserspender, facing: west } ] }
+  "r": { objects: [ { id: regal, facing: west } ] }
+  "a": { objects: [ { id: aktenschrank, facing: west } ] }
+  "q": { objects: [ { id: pflanze } ] }
+  "F": { objects: [ { id: fluchtplan, facing: east, y: 2 } ] }
+  "E": { objects: [ { id: schild_feuerloescher, facing: west, y: 3 }, { id: feuerloescher_abc, prop: true, facing: west, give: true } ] }
+  "H": { objects: [ { id: schild_erste_hilfe, facing: east, y: 3 } ] }
+  "N": { objects: [ { id: schild_notausgang, facing: north, y: 3 } ] }
+  "R": { objects: [ { id: druckknopfmelder, facing: west, y: 2 }, { id: schild_brandmelder, facing: west, y: 3 } ] }
+  # Mission table (one card per mission) and the author corner
+  "1": { block: "minecraft:dark_oak_slab[type=top]", mission: branddreieck }
+  "2": { block: "minecraft:dark_oak_slab[type=top]", mission: gefahrensuche }
+  "3": { block: "minecraft:dark_oak_slab[type=top]", mission: akku_alarm }
+  "4": { block: "minecraft:dark_oak_slab[type=top]", mission: fettbrand }
+  "5": { block: "minecraft:dark_oak_slab[type=top]", mission: ernstfall }
+  "V": { npc: vensin, facing: west, text: about }
+  # School yard
+  ",": { floor: minecraft:grass_block, roof: false }
+  "p": { floor: minecraft:dirt_path, roof: false }
+  "t": { floor: minecraft:grass_block, roof: false, pillar: [minecraft:oak_log, minecraft:oak_log, minecraft:oak_leaves, minecraft:oak_leaves] }
+  "l": { floor: minecraft:grass_block, roof: false, pillar: [minecraft:air, minecraft:air, minecraft:oak_leaves] }
+  "B": { floor: minecraft:grass_block, roof: false, objects: [ { id: bank, facing: north } ] }
+  "A": { floor: minecraft:dirt_path, roof: false, pillar: [minecraft:oak_fence], objects: [ { id: schild_sammelstelle, facing: north, y: 2 } ] }
+
+plan:
+  - "##WW#KKKKKKK#WW##"
+  - "#F...L..i.....qE#"
+  - "#b....12345...w.#"
+  - "#.............m.#"
+  - "#..T..T..T......#"
+  - "#..c..c..c.....V#"
+  - "#..T..T..T......#"
+  - "#..c..c..c...r..#"
+  - "#.......S......a#"
+  - "#H......N......R#"
+  - "########D########"
+  - ",,,,,,,,p,,,,,,,,"
+  - ",lll,,,,p,,,,lll,"
+  - ",ltl,,,,ppppp,ltl"
+  - ",lll,,,,,,,,A,lll"
+  - ",,,,,,,,,,,,B,,,,"
+  - ",,,,,,,,,,,,,,,,,"
+
+texts:
+  willkommen: |-
+    <gradient:#ff4e00:#ffb000><bold>Lass nichts anbrennen</bold></gradient>
+    <white>Willkommen bei der BrandNeu Versand GmbH!</white>
+    <gray>Finde Flucht- und Rettungsplan, Feuerlöscher,</gray>
+    <gray>Druckknopfmelder und draußen die Sammelstelle.</gray>
+  missionen: |-
+    <gradient:#ff6a00:#ffd000><bold>Missionstisch</bold></gradient>
+    <white>Schau eine Karte an und klicke sie an.</white>
+    <gray>Mit Freunden: /gruppe einladen <Name></gray>
+  # Placeholders: write these texts about yourself and the project.
+  about: |-
+    <gradient:#f7971e:#ffd200><bold>vensin</bold></gradient>
+    <white>Idee, Konzept und Code</white>
+    <gray>▶ Rechtsklick für mehr</gray>
+  about_chat: |-
+    <gradient:#f7971e:#ffd200><bold>Über das Projekt</bold></gradient>
+    <white>„Lass nichts anbrennen“ ist ein Minecraft-Spielmodus zum Brandschutz, entstanden als Beitrag
+    zum Wettbewerb „Jugend will sich-er-leben“ 2026/27.</white>
+    <gray>Idee, Konzept und Code: vensin (GitHub: vxnsin). (Platzhalter – diesen Text in content/maps/hub.yml anpassen.)</gray>
