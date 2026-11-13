@@ -1,5 +1,3 @@
-"""Personal equipment and tools: fire blanket, pot lid, phone, clipboard, high-visibility vest, ID card."""
-
 from __future__ import annotations
 
 from .. import paint as p
@@ -14,7 +12,6 @@ DIGITS = {
 
 
 def loeschdecke() -> Asset:
-    """Fire blanket in its wall pouch with two pull tapes."""
     atlas = Atlas()
     front = p.tile(p.RED, 10, 13, border=p.RED_DARK)
     p.rect(front, 2, 2, 7, 7, p.WHITE)
@@ -49,7 +46,6 @@ def topfdeckel() -> Asset:
 
 
 def handy() -> Asset:
-    """Smartphone showing the emergency number 112 (front = north face)."""
     atlas = Atlas()
     screen = p.canvas(12, 20)
     for y in range(20):
@@ -86,7 +82,6 @@ def klemmbrett() -> Asset:
 
 
 def warnweste() -> Asset:
-    """Folded high-visibility vest (worn version: equippable component, later)."""
     atlas = Atlas()
     top = p.tile(p.HI_VIS, 12, 12, noise=0.04, seed=9)
     p.rect(top, 0, 3, 11, 4, p.rgb("#c9ccd0"))

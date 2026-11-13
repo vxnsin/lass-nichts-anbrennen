@@ -1,8 +1,4 @@
-"""Building fire protection: extinguisher bracket, call point, smoke detector, sprinkler, hose cabinet,
-fire door, door wedge, battery quarantine box and battery charging cabinet.
-
-Wall-mounted models have their front on the north face and their back at z = 16.
-"""
+"""Wall-mounted models have their front on the north face and their back at z = 16."""
 
 from __future__ import annotations
 
@@ -25,7 +21,6 @@ def feuerloescher_halter() -> Asset:
 
 
 def druckknopfmelder() -> Asset:
-    """Manual fire alarm call point (red housing, glass window, push button)."""
     atlas = Atlas()
     front = p.tile(p.RED, 12, 12, border=p.RED_DARK)
     p.rect(front, 2, 2, 9, 9, p.rgb("#e8eef0"))
@@ -40,7 +35,6 @@ def druckknopfmelder() -> Asset:
 
 
 def rauchmelder() -> Asset:
-    """Ceiling smoke detector (mounted at the top of the block)."""
     atlas = Atlas()
     bottom = p.tile(p.WHITE, 12, 12)
     p.circle(bottom, 5.5, 5.5, 4.5, p.OFF_WHITE, ring=1.0)
@@ -68,7 +62,6 @@ def sprinkler() -> Asset:
 
 
 def wandhydrant() -> Asset:
-    """Wall hose cabinet with a hose reel visible through the glass door."""
     atlas = Atlas()
     door = p.tile(p.RED, 24, 24, border=p.RED_DARK)
     p.rect(door, 2, 2, 21, 17, p.rgb("#cfe3ea"))
@@ -85,7 +78,6 @@ def wandhydrant() -> Asset:
 
 
 def brandschutztuer() -> Asset:
-    """Self-closing fire door, two blocks high (frame, door leaf, lever handle, door closer, sign)."""
     atlas = Atlas()
     leaf = p.tile(p.LIGHT_GREY, 14, 31, noise=0.02, seed=19)
     p.rect(leaf, 4, 21, 9, 23, p.WHITE)  # "keep closed" sign
@@ -107,7 +99,6 @@ def brandschutztuer() -> Asset:
 
 
 def holzkeil() -> Asset:
-    """Wooden door wedge (a typical hazard: fire doors must not be wedged open)."""
     atlas = Atlas()
     atlas.add("wood", p.tile(p.WOOD, 8, 8, noise=0.08, seed=23))
     atlas.add("end", p.tile(p.WOOD_DARK, 4, 4, noise=0.08, seed=29))
@@ -129,7 +120,6 @@ def _warning_label(width: int, height: int) -> "p.Image.Image":
 
 
 def akku_quarantaenebox() -> Asset:
-    """Metal box filled with sand for damaged lithium-ion batteries."""
     atlas = Atlas()
     atlas.add("label", _warning_label(24, 14))
     atlas.add("box", p.tile(p.SAFETY_YELLOW, 8, 8, profile="bevel", noise=0.03, seed=31))
@@ -143,7 +133,6 @@ def akku_quarantaenebox() -> Asset:
 
 
 def akku_ladeschrank() -> Asset:
-    """Fire-resistant battery charging cabinet with ventilated door."""
     atlas = Atlas()
     door = p.perforated(p.METAL_DARKER, p.BLACK, 26, 28)
     p.overlay(door, _warning_label(14, 10), 6, 3)

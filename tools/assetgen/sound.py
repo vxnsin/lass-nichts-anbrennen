@@ -1,5 +1,3 @@
-"""Synthesized sound effects."""
-
 from __future__ import annotations
 
 import numpy as np
@@ -11,7 +9,6 @@ RATE = 44_100
 
 
 def spray(seed: int = 112, duration: float = 0.75) -> np.ndarray:
-    """Pressurized spray: band-passed noise with turbulence, a valve pop at the start and a soft release."""
     samples = int(RATE * duration)
     rng = np.random.default_rng(seed)
     t = np.arange(samples) / RATE

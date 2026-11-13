@@ -1,5 +1,3 @@
-"""Electrical hazards: batteries (intact, damaged, swollen), power banks, chargers, power strip, damaged cable."""
-
 from __future__ import annotations
 
 from .. import paint as p
@@ -25,7 +23,7 @@ def _battery_front(damaged: bool) -> "p.Image.Image":
 
 
 def _battery(asset_id: str, title: str, state: str) -> Asset:
-    """E-bike style battery pack. state: ok | damaged | swollen."""
+    """state: ok | damaged | swollen."""
     atlas = Atlas()
     atlas.add("front", _battery_front(state != "ok"))
     atlas.add("shell", p.tile(p.PLASTIC, 8, 8, profile="bevel", noise=0.03, seed=11))

@@ -1,5 +1,3 @@
-"""HUD glyph textures (rendered via the lna:hud font, see content/glyphs.yml)."""
-
 from __future__ import annotations
 
 from . import paint as p

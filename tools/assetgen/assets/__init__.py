@@ -1,6 +1,6 @@
-"""Asset definitions, grouped by topic. ALL_ASSETS lists every asset factory in output order."""
+"""ALL_ASSETS lists every asset factory in output order."""
 
-from . import building, electrical, equipment, extinguishers, kitchen, signs
+from . import building, decor, electrical, equipment, extinguishers, kitchen, signs
 
 ALL_ASSETS = [
     *extinguishers.ALL,
@@ -8,5 +8,6 @@ ALL_ASSETS = [
     *electrical.ALL,
     *building.ALL,
     *kitchen.ALL,
+    *decor.ALL,
     *signs.ALL,
 ]
